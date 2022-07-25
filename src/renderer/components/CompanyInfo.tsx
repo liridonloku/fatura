@@ -8,7 +8,11 @@ const CompanyInfo: React.FC<Props> = () => {
   return (
     <>
       <h1>Company Info</h1>
-      <button type="button" onClick={() => navigate('/')}>
+      <button
+        className="btn btn-primary"
+        type="button"
+        onClick={() => navigate('/')}
+      >
         Home
       </button>
     </>

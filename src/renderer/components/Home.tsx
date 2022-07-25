@@ -8,10 +8,18 @@ const Home: React.FC<Props> = () => {
   return (
     <div>
       <h1>Home</h1>
-      <button type="button" onClick={() => navigate('/company-info')}>
+      <button
+        className="btn btn-primary me-2"
+        type="button"
+        onClick={() => navigate('/company-info')}
+      >
         Company Info
       </button>
-      <button type="button" onClick={() => navigate('/new-invoice')}>
+      <button
+        className="btn btn-secondary"
+        type="button"
+        onClick={() => navigate('/new-invoice')}
+      >
         New Invoice
       </button>
     </div>
