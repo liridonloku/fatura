@@ -1,9 +1,12 @@
 import React from 'react';
+import { CompanyInfoType } from './companyInfo/companyInfo.types';
 
-type Props = Record<string, unknown>;
+type Props = {
+  company: CompanyInfoType;
+};
 
-const Header: React.FC<Props> = () => {
-  return <div>Header</div>;
+const Header: React.FC<Props> = ({ company }) => {
+  return <div>{company.name || 'Update Company information'}</div>;
 };
 
 export default Header;
