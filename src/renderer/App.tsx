@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import CompanyInfo from './components/companyInfo/CompanyInfo';
@@ -15,7 +15,17 @@ export default function App() {
 
   const updateCompanyInfo = (info: CompanyInfoType) => {
     setcompanyInfo(info);
+    localStorage.setItem('companyInfo', JSON.stringify(info));
   };
+
+  // Load company info from localStorage on startup
+  useEffect(() => {
+    const info = localStorage.getItem('companyInfo');
+    if (info) {
+      const parsed: CompanyInfoType = JSON.parse(info);
+      setcompanyInfo(parsed);
+    }
+  }, []);
 
   return (
     <Router>
