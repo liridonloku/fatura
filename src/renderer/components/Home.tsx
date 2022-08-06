@@ -6,7 +6,7 @@ type Props = Record<string, unknown>;
 const Home: React.FC<Props> = () => {
   const navigate = useNavigate();
   return (
-    <div>
+    <div className="container text-center">
       <h1>Home</h1>
       <button
         className="btn btn-primary me-2"

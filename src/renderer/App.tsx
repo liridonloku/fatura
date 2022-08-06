@@ -4,8 +4,8 @@ import './App.css';
 import CompanyInfo from './components/companyInfo/CompanyInfo';
 import Header from './components/Header';
 import Home from './components/Home';
-import NewInvoice from './components/NewInvoice';
 import { CompanyInfoType } from './components/companyInfo/companyInfo.types';
+import InvoiceCreator from './components/invoiceCreator/InvoiceCreator';
 
 export default function App() {
   const [companyInfo, setcompanyInfo] = useState<CompanyInfoType>({
@@ -38,7 +38,7 @@ export default function App() {
             <CompanyInfo update={updateCompanyInfo} company={companyInfo} />
           }
         />
-        <Route path="/new-invoice" element={<NewInvoice />} />
+        <Route path="/new-invoice" element={<InvoiceCreator />} />
       </Routes>
     </Router>
   );

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 type Props = Record<string, unknown>;
 
-const NewInvoice: React.FC<Props> = () => {
+const InvoiceCreator: React.FC<Props> = () => {
   const navigate = useNavigate();
   return (
     <>
@@ -15,4 +15,4 @@ const NewInvoice: React.FC<Props> = () => {
   );
 };
 
-export default NewInvoice;
+export default InvoiceCreator;
