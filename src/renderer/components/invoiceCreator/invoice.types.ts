@@ -5,6 +5,10 @@ type BuyerType = {
   address?: string;
 };
 
+type Concrete<Type> = [keyof Type, keyof Type, keyof Type, keyof Type];
+
+export type BuyerInfoType = Concrete<BuyerType>;
+
 type DeliveryType = {
   deliveryAddress: string;
   deliveryDate: string;
@@ -20,6 +24,7 @@ type ItemType = {
 export type InvoiceType = {
   buyer: BuyerType;
   delivery?: DeliveryType;
+  invoiceNo: string;
   date: Date;
   items: ItemType[];
 };
