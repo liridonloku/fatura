@@ -5,12 +5,14 @@ export type BuyerType = {
   address?: string;
 };
 
+export type BuyerInfoType = keyof BuyerType;
+
 type DeliveryType = {
   deliveryAddress: string;
   deliveryDate: string;
 };
 
-type ItemType = {
+export type ItemType = {
   description: string;
   quantity: number;
   price: number;
