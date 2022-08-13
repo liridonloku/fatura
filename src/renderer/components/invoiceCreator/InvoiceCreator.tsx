@@ -30,12 +30,15 @@ const InvoiceCreator: React.FC<Props> = () => {
 
   // Create first item on mount
   useEffect(() => {
-    append({
-      description: '',
-      quantity: 0,
-      price: 0,
-      tax: 0,
-    });
+    append(
+      {
+        description: '',
+        quantity: 0,
+        price: 0,
+        tax: 0,
+      },
+      { shouldFocus: false }
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -29,10 +29,15 @@ const CompanyInfo: React.FC<Props> = ({ company, update }) => {
   // Fill bank account information on mount
   useEffect(() => {
     company.bankAccounts?.forEach((account) => {
-      append({
-        bank: account.bank,
-        accountNumber: account.accountNumber,
-      });
+      append(
+        {
+          bank: account.bank,
+          accountNumber: account.accountNumber,
+        },
+        {
+          shouldFocus: false,
+        }
+      );
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
