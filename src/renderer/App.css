@@ -5,3 +5,10 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+/* Remove arrows on input[number] */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

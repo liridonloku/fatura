@@ -4,7 +4,11 @@ import {
   FieldArrayMethodProps,
   FieldArrayWithId,
 } from 'react-hook-form/dist/types/fieldArray';
-import { UseFormRegister } from 'react-hook-form/dist/types/form';
+import {
+  UseFormGetValues,
+  UseFormRegister,
+  UseFormSetValue,
+} from 'react-hook-form/dist/types/form';
 import { InvoiceType, ItemType } from './invoice.types';
 
 type Props = {
@@ -15,9 +19,36 @@ type Props = {
     value: Partial<ItemType> | Partial<ItemType>[],
     options?: FieldArrayMethodProps | undefined
   ) => void;
+  getValues: UseFormGetValues<InvoiceType>;
+  setValue: UseFormSetValue<InvoiceType>;
 };
 
-const Items: React.FC<Props> = ({ fields, register, remove, append }) => {
+const Items: React.FC<Props> = ({
+  fields,
+  register,
+  remove,
+  append,
+  getValues,
+  setValue,
+}) => {
+  // TODO: Clean up a bit
+  const calculateTotal = (e: React.FormEvent<HTMLInputElement>, i: number) => {
+    const values = getValues(`items.${i}`);
+    let { quantity, price, tax } = values;
+    if (e.currentTarget.getAttribute('name')?.includes('quantity')) {
+      quantity = parseFloat(e.currentTarget.value);
+    }
+    if (e.currentTarget.getAttribute('name')?.includes('price')) {
+      price = parseFloat(e.currentTarget.value);
+    }
+    if (e.currentTarget.getAttribute('name')?.includes('tax')) {
+      tax = parseFloat(e.currentTarget.value);
+    }
+    const total = quantity * price * (1 + tax / 100);
+    const displayTotal = total.toFixed(2);
+    setValue(`items.${i}.total`, displayTotal);
+  };
+
   return (
     <fieldset className="border p-3 mb-2">
       <legend className="mb-0">Items</legend>
@@ -53,6 +84,9 @@ const Items: React.FC<Props> = ({ fields, register, remove, append }) => {
               {...register(`items.${i}.quantity`)}
               defaultValue={item.quantity}
               placeholder="Quantity"
+              onInput={(e) => {
+                calculateTotal(e, i);
+              }}
             />
           </div>
           <div className="col-sm-6 col-md-1 p-0">
@@ -63,6 +97,9 @@ const Items: React.FC<Props> = ({ fields, register, remove, append }) => {
               {...register(`items.${i}.price`)}
               defaultValue={item.price}
               placeholder="Price"
+              onInput={(e) => {
+                calculateTotal(e, i);
+              }}
             />
           </div>
           <div className="col-sm-6 col-md-1 p-0">
@@ -72,14 +109,18 @@ const Items: React.FC<Props> = ({ fields, register, remove, append }) => {
               {...register(`items.${i}.tax`)}
               defaultValue={item.tax}
               placeholder="18"
+              onInput={(e) => {
+                calculateTotal(e, i);
+              }}
             />
           </div>
           <div className="col-sm-6 col-md-2 p-0">
             <input
-              type="number"
-              className="form-control"
+              type="text"
+              className="form-control text-end"
               readOnly
-              value={item.quantity + item.price}
+              {...register(`items.${i}.total`)}
+              value={item.total}
               placeholder="-"
             />
           </div>

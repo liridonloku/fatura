@@ -19,6 +19,8 @@ const InvoiceCreator: React.FC<Props> = () => {
     register,
     control,
     handleSubmit,
+    getValues,
+    setValue,
     // ADD THIS formState: { errors },
   } = useForm<InvoiceType>();
 
@@ -69,6 +71,8 @@ const InvoiceCreator: React.FC<Props> = () => {
             register={register}
             remove={remove}
             append={append}
+            getValues={getValues}
+            setValue={setValue}
           />
           <div className="text-center mb-5">
             <button type="submit" className="btn btn-success mt-3">
