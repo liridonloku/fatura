@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
-import generateInputDate from 'renderer/utils/generateInputDate';
-import generateInvoiceNo from 'renderer/utils/generateInvoiceNo';
+import generateInputDate from '../../utils/generateInputDate';
+import generateInvoiceNo from '../../utils/generateInvoiceNo';
 import { InvoiceType } from './invoice.types';
 
 type Props = {
