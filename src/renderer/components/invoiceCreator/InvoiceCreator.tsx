@@ -49,7 +49,7 @@ const InvoiceCreator: React.FC<Props> = () => {
 
   return (
     <>
-      <div className="container text-center mb-3">
+      <div className="container-xl text-center mb-3">
         <h1>New Invoice</h1>
         <button
           className="btn btn-primary"
@@ -59,7 +59,7 @@ const InvoiceCreator: React.FC<Props> = () => {
           Home
         </button>
       </div>
-      <div className="container">
+      <div className="container-xl">
         <form
           onSubmit={handleSubmit(onSubmit)}
           onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}

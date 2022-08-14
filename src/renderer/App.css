@@ -12,3 +12,10 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+/* Font size @items */
+fieldset.items,
+fieldset.items input,
+fieldset.items button {
+  font-size: 12px;
+}

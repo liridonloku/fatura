@@ -17,6 +17,7 @@ export type ItemType = {
   quantity: number;
   price: number;
   tax: number;
+  priceWTax: string;
   total: string;
 };
 

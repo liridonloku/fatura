@@ -31,7 +31,6 @@ const Items: React.FC<Props> = ({
   getValues,
   setValue,
 }) => {
-  // TODO: Clean up a bit - Handle NaN
   const calculateTotal = (e: React.FormEvent<HTMLInputElement>, i: number) => {
     const values = getValues(`items.${i}`);
     let { quantity, price, tax } = values;
@@ -44,87 +43,114 @@ const Items: React.FC<Props> = ({
     if (e.currentTarget.getAttribute('name')?.includes('tax')) {
       tax = parseFloat(e.currentTarget.value);
     }
+    const priceWTax = price * (1 + tax / 100);
     const total = quantity * price * (1 + tax / 100);
-    const displayTotal = total.toFixed(2);
+
+    const displayPriceWTax = Number.isNaN(priceWTax)
+      ? '0'
+      : priceWTax.toFixed(2);
+    const displayTotal = Number.isNaN(total) ? '0' : total.toFixed(2);
     setValue(`items.${i}.total`, displayTotal);
+    setValue(`items.${i}.priceWTax`, displayPriceWTax);
   };
 
   return (
-    <fieldset className="border p-3 mb-2">
+    <fieldset className="border p-3 mb-2 items">
       <legend className="mb-0">Items</legend>
-      <div className="row m-0 mb-2 text-center">
-        <div className="col-sm-1 d-flex text-center align-items-center">
-          No.
+      <div className="container-fluid d-flex justify-content-between align-items-center">
+        <div>No.</div>
+        <div className="row flex-grow-1 mx-0 px-1 text-center align-items-center">
+          <div className="col-sm-6 p-0">Description</div>
+          <div className="col-sm-1 p-0">Qty.</div>
+          <div className="col-sm-1 p-0">Price</div>
+          <div className="col-sm-1 p-0">Tax %</div>
+          <div className="col-sm-1 p-0">Price with tax</div>
+          <div className="col-sm-2 p-0">Total</div>
         </div>
-        <div className="col-sm-6 col-md-5 p-0">Description</div>
-        <div className="col-sm-6 col-md-1 p-0">Qty.</div>
-        <div className="col-sm-6 col-md-1 p-0">Price</div>
-        <div className="col-sm-6 col-md-1 p-0">Tax %</div>
-        <div className="col-sm-6 col-md-1 p-0">Total</div>
+        <div className="px-1 text-center d-flex align-items-center">
+          <button type="button" className="btn btn-outline-danger invisible">
+            Del
+          </button>
+        </div>
       </div>
       {fields.map((item, i) => (
-        <div className="row m-0 mb-2" key={item.id}>
-          <div className="col-sm-1 d-flex text-center align-items-center">
-            {i + 1}
+        <div className="container-fluid d-flex justify-content-between align-items-center mb-2">
+          <div className="d-flex flex-shrink-0" style={{ width: '19.5px' }}>
+            {i + 1}.
           </div>
-          <div className="col-sm-6 col-md-5 p-0">
-            <input
-              type="text"
-              className="form-control"
-              {...register(`items.${i}.description`)}
-              defaultValue={item.description}
-              placeholder="Description"
-            />
+          <div
+            className="row flex-grow-1 mx-0 px-1 text-center align-items-center"
+            key={item.id}
+          >
+            <div className="col-sm-6 p-0">
+              <input
+                type="text"
+                className="form-control"
+                {...register(`items.${i}.description`)}
+                defaultValue={item.description}
+                placeholder="Description"
+              />
+            </div>
+            <div className="col-sm-1 p-0">
+              <input
+                type="number"
+                min={0}
+                className="form-control"
+                {...register(`items.${i}.quantity`)}
+                defaultValue={item.quantity}
+                placeholder="Quantity"
+                onInput={(e) => {
+                  calculateTotal(e, i);
+                }}
+              />
+            </div>
+            <div className="col-sm-1 p-0">
+              <input
+                type="number"
+                min={0}
+                className="form-control"
+                {...register(`items.${i}.price`)}
+                defaultValue={item.price}
+                placeholder="Price"
+                onInput={(e) => {
+                  calculateTotal(e, i);
+                }}
+              />
+            </div>
+            <div className="col-sm-1 p-0">
+              <input
+                type="number"
+                className="form-control"
+                {...register(`items.${i}.tax`)}
+                defaultValue={item.tax}
+                placeholder="18"
+                onInput={(e) => {
+                  calculateTotal(e, i);
+                }}
+              />
+            </div>
+            <div className="col-sm-1 p-0">
+              <input
+                type="text"
+                className="form-control"
+                readOnly
+                {...register(`items.${i}.priceWTax`)}
+                value={item.total}
+                placeholder="-"
+              />
+            </div>
+            <div className="col-sm-2 p-0">
+              <input
+                type="text"
+                className="form-control text-end"
+                readOnly
+                {...register(`items.${i}.total`)}
+                value={item.total}
+                placeholder="-"
+              />
+            </div>
           </div>
-          <div className="col-sm-6 col-md-1 p-0">
-            <input
-              type="number"
-              min={0}
-              className="form-control"
-              {...register(`items.${i}.quantity`)}
-              defaultValue={item.quantity}
-              placeholder="Quantity"
-              onInput={(e) => {
-                calculateTotal(e, i);
-              }}
-            />
-          </div>
-          <div className="col-sm-6 col-md-1 p-0">
-            <input
-              type="number"
-              min={0}
-              className="form-control"
-              {...register(`items.${i}.price`)}
-              defaultValue={item.price}
-              placeholder="Price"
-              onInput={(e) => {
-                calculateTotal(e, i);
-              }}
-            />
-          </div>
-          <div className="col-sm-6 col-md-1 p-0">
-            <input
-              type="number"
-              className="form-control"
-              {...register(`items.${i}.tax`)}
-              defaultValue={item.tax}
-              placeholder="18"
-              onInput={(e) => {
-                calculateTotal(e, i);
-              }}
-            />
-          </div>
-          <div className="col-sm-6 col-md-2 p-0">
-            <input
-              type="text"
-              className="form-control text-end"
-              readOnly
-              {...register(`items.${i}.total`)}
-              value={item.total}
-              placeholder="-"
-            />
-          </div>
-          <div className="col-sm-6 col-md-1 px-1 text-center">
+          <div className="px-1 text-center d-flex align-items-center">
             <button
               type="button"
               onClick={() => remove(i)}
@@ -144,6 +170,8 @@ const Items: React.FC<Props> = ({
               quantity: 0,
               price: 0,
               tax: 0,
+              priceWTax: '0',
+              total: '0',
             })
           }
           className="btn btn-outline-primary"
