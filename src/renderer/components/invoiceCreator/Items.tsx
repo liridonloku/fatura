@@ -31,7 +31,7 @@ const Items: React.FC<Props> = ({
   getValues,
   setValue,
 }) => {
-  // TODO: Clean up a bit
+  // TODO: Clean up a bit - Handle NaN
   const calculateTotal = (e: React.FormEvent<HTMLInputElement>, i: number) => {
     const values = getValues(`items.${i}`);
     let { quantity, price, tax } = values;

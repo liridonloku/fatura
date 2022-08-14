@@ -22,7 +22,7 @@ const InvoiceInfo: React.FC<Props> = ({ register }) => {
               {...register('invoiceDate')}
               id="invoiceDate"
               className="form-control"
-              defaultValue={generateInputDate()}
+              defaultValue={generateInputDate(new Date())}
               required
             />
           </label>
