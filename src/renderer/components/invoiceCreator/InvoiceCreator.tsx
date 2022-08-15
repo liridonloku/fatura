@@ -44,8 +44,12 @@ const InvoiceCreator: React.FC<Props> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // eslint-disable-next-line no-console
-  const onSubmit: SubmitHandler<InvoiceType> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<InvoiceType> = (data) => {
+    // eslint-disable-next-line no-console
+    console.log(data);
+    // TODO: Fix save to pdf
+    window.electron.ipcRenderer.sendMessage('testPrint', [data]);
+  };
 
   return (
     <>

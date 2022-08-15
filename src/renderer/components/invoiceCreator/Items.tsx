@@ -74,7 +74,10 @@ const Items: React.FC<Props> = ({
         </div>
       </div>
       {fields.map((item, i) => (
-        <div className="container-fluid d-flex justify-content-between align-items-center mb-2">
+        <div
+          key={item.id}
+          className="container-fluid d-flex justify-content-between align-items-center mb-2"
+        >
           <div className="d-flex flex-shrink-0" style={{ width: '19.5px' }}>
             {i + 1}.
           </div>

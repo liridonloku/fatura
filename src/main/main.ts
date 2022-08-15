@@ -9,6 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
+import fs from 'fs';
 import { app, BrowserWindow, shell, ipcMain } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
@@ -29,6 +30,39 @@ ipcMain.on('ipc-example', async (event, arg) => {
   const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
   console.log(msgTemplate(arg));
   event.reply('ipc-example', msgTemplate('pong'));
+});
+
+// TODO: Fix save to PDF
+ipcMain.on('testPrint', async (event, args) => {
+  const filepath1 = path.join(
+    __dirname,
+    `../../assets/${args[0].invoiceNo}.pdf`
+  );
+  const win = BrowserWindow.getFocusedWindow();
+  if (win) {
+    // TODO: Fix Save to PDF
+    console.log(filepath1);
+    console.log(win.getSize());
+    win.webContents
+      .printToPDF({
+        marginsType: 2,
+        pageSize: 'A4',
+      })
+      .then((data) => {
+        fs.writeFile(filepath1, data, (err) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log('PDF Generated Successfully');
+          }
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    console.log(args);
+    event.reply('testPrint', 'test successful');
+  }
 });
 
 if (process.env.NODE_ENV === 'production') {
