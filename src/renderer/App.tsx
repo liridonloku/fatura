@@ -6,6 +6,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import { CompanyInfoType } from './components/companyInfo/companyInfo.types';
 import InvoiceCreator from './components/invoiceCreator/InvoiceCreator';
+import InvoiceViewer from './components/invoiceViewer/InvoiceViewer';
 
 export default function App() {
   const [companyInfo, setcompanyInfo] = useState<CompanyInfoType>({
@@ -39,6 +40,7 @@ export default function App() {
           }
         />
         <Route path="/new-invoice" element={<InvoiceCreator />} />
+        <Route path="/invoice-viewer" element={<InvoiceViewer />} />
       </Routes>
     </Router>
   );
