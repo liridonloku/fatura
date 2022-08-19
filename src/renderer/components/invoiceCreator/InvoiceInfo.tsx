@@ -5,15 +5,14 @@ import generateInputDate from '../../utils/generateInputDate';
 import generateInvoiceNo from '../../utils/generateInvoiceNo';
 import { InvoiceType } from './invoice.types';
 
-/**
- * InvoiceInfo component is the section where the user can input
- * information about the invoice, inside of InvoiceCreator
- */
-
 type Props = {
   register: UseFormRegister<InvoiceType>;
 };
 
+/**
+ * InvoiceInfo component is the section where the user can input
+ * information about the invoice, inside of InvoiceCreator
+ */
 const InvoiceInfo: React.FC<Props> = ({ register }) => {
   return (
     <fieldset className="border p-3 mb-2">

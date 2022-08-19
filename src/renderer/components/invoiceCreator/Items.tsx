@@ -11,11 +11,6 @@ import {
 } from 'react-hook-form/dist/types/form';
 import { InvoiceType, ItemType } from './invoice.types';
 
-/**
- * BuyerInfo component is the section where the user can input
- * information about the items, inside of InvoiceCreator
- */
-
 type Props = {
   fields: FieldArrayWithId<InvoiceType, 'items', 'id'>[];
   register: UseFormRegister<InvoiceType>;
@@ -28,6 +23,10 @@ type Props = {
   setValue: UseFormSetValue<InvoiceType>;
 };
 
+/**
+ * Items component is the section where the user can input
+ * information about the items, inside of InvoiceCreator
+ */
 const Items: React.FC<Props> = ({
   fields,
   register,

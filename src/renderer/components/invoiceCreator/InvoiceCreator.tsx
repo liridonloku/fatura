@@ -8,10 +8,6 @@ import BuyerInfo from './BuyerInfo';
 import InvoiceInfo from './InvoiceInfo';
 import Items from './Items';
 
-/**
- * The invoice creator component.
- */
-
 type Props = {
   /**
    * Updates app state containing invoce data
@@ -19,6 +15,9 @@ type Props = {
   updateInvoice: (newInvoice: InvoiceType) => void;
 };
 
+/**
+ * The invoice creator component.
+ */
 const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
   const navigate = useNavigate();
 

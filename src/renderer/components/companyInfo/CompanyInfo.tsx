@@ -4,11 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { CompanyInfoType } from './companyInfo.types';
 
-/**
- * CompanyInfo is the component where the user can see and update information
- * about the company
- */
-
 type Props = {
   /**
    * Updates app state containing company data
@@ -20,6 +15,10 @@ type Props = {
   company: CompanyInfoType;
 };
 
+/**
+ * CompanyInfo is the component where the user can see and update information
+ * about the company
+ */
 const CompanyInfo: React.FC<Props> = ({ company, update }) => {
   const navigate = useNavigate();
 

@@ -3,11 +3,6 @@ import React from 'react';
 import { UseFormRegister } from 'react-hook-form/dist/types/form';
 import { BuyerInfoType, InvoiceType } from './invoice.types';
 
-/**
- * BuyerInfo component is the section where the user can input
- * information about the buyer, inside of InvoiceCreator
- */
-
 type Props = {
   /**
    * Information about the buyer that can be used, taken as a collection of keys from BuyerType
@@ -16,6 +11,10 @@ type Props = {
   register: UseFormRegister<InvoiceType>;
 };
 
+/**
+ * BuyerInfo component is the section where the user can input
+ * information about the buyer, inside of InvoiceCreator
+ */
 const BuyerInfo: React.FC<Props> = ({ buyerInfo, register }) => {
   return (
     <fieldset className="border p-3 mb-2">

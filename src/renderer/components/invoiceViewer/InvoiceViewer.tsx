@@ -2,10 +2,6 @@ import React from 'react';
 import { CompanyInfoType } from '../companyInfo/companyInfo.types';
 import { InvoiceType } from '../invoiceCreator/invoice.types';
 
-/**
- * The viewer component for generated invoices that contains the print and export functions.
- */
-
 type Props = {
   /**
    * Company information including the name, id, address etc.
@@ -17,6 +13,9 @@ type Props = {
   invoice: InvoiceType | null;
 };
 
+/**
+ * The viewer component for generated invoices that contains the print and export functions.
+ */
 const InvoiceViewer: React.FC<Props> = ({
   company = { name: 'Company', id: 'id' },
   invoice,
