@@ -11,6 +11,11 @@ import {
 } from 'react-hook-form/dist/types/form';
 import { InvoiceType, ItemType } from './invoice.types';
 
+/**
+ * BuyerInfo component is the section where the user can input
+ * information about the items, inside of InvoiceCreator
+ */
+
 type Props = {
   fields: FieldArrayWithId<InvoiceType, 'items', 'id'>[];
   register: UseFormRegister<InvoiceType>;
@@ -31,7 +36,13 @@ const Items: React.FC<Props> = ({
   getValues,
   setValue,
 }) => {
-  const calculateTotal = (e: React.FormEvent<HTMLInputElement>, i: number) => {
+  /**
+   * Updates the 'total' and 'priceWTax' inputs of an item when quantity, price
+   * or tax changes
+   * @param e Event from the input element that has changed
+   * @param i The field from FieldArray that has changed
+   */
+  const updateTotal = (e: React.FormEvent<HTMLInputElement>, i: number) => {
     const values = getValues(`items.${i}`);
     let { quantity, price, tax } = values;
     if (e.currentTarget.getAttribute('name')?.includes('quantity')) {
@@ -104,7 +115,7 @@ const Items: React.FC<Props> = ({
                 defaultValue={item.quantity}
                 placeholder="Quantity"
                 onInput={(e) => {
-                  calculateTotal(e, i);
+                  updateTotal(e, i);
                 }}
               />
             </div>
@@ -118,7 +129,7 @@ const Items: React.FC<Props> = ({
                 defaultValue={item.price}
                 placeholder="Price"
                 onInput={(e) => {
-                  calculateTotal(e, i);
+                  updateTotal(e, i);
                 }}
               />
             </div>
@@ -131,7 +142,7 @@ const Items: React.FC<Props> = ({
                 defaultValue={item.tax}
                 placeholder="18"
                 onInput={(e) => {
-                  calculateTotal(e, i);
+                  updateTotal(e, i);
                 }}
               />
             </div>

@@ -13,6 +13,9 @@ import Items from './Items';
  */
 
 type Props = {
+  /**
+   * Updates app state containing invoce data
+   */
   updateInvoice: (newInvoice: InvoiceType) => void;
 };
 
@@ -50,6 +53,11 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  /**
+   * Calls the updateInvoice prop to set the data as invoice state
+   * then navigates to the viewer component
+   * @param data Form data
+   */
   const onSubmit: SubmitHandler<InvoiceType> = (data) => {
     updateInvoice(data);
     navigate('/invoice-viewer');

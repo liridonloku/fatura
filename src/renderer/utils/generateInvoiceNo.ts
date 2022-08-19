@@ -26,6 +26,11 @@ const letters = [
   'Z',
 ];
 
+/**
+ * Generates an invoice number based on the current date/time
+ * Goes down to the second to avoid duplication of invoice numbers
+ * @returns Invoice number as a string
+ */
 const generateInvoiceNo = () => {
   const date = new Date();
 

@@ -7,7 +7,13 @@ import { InvoiceType } from '../invoiceCreator/invoice.types';
  */
 
 type Props = {
+  /**
+   * Company information including the name, id, address etc.
+   */
   company: CompanyInfoType;
+  /**
+   * Invoice data: Buyer info, dates and delivery address, and items
+   */
   invoice: InvoiceType | null;
 };
 
@@ -18,7 +24,7 @@ const InvoiceViewer: React.FC<Props> = ({
   /**
    * Renders items on the invoice
    * @param items Items to be rendered
-   * @returns JSX.Element[]
+   * @returns An array of JSX elements
    */
   const renderItems = (items: InvoiceType['items']) => {
     return items.map((item, index) => (
@@ -34,7 +40,7 @@ const InvoiceViewer: React.FC<Props> = ({
       </tr>
     ));
   };
-
+  // TODO: Change this
   const calculateItemTotal = (items: InvoiceType['items']) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return items.reduce((acc: any, current) => {
