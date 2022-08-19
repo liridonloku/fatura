@@ -97,6 +97,7 @@ const Items: React.FC<Props> = ({
             <div className="col-sm-1 p-0">
               <input
                 type="number"
+                step={0.01}
                 min={0}
                 className="form-control"
                 {...register(`items.${i}.quantity`)}
@@ -110,6 +111,7 @@ const Items: React.FC<Props> = ({
             <div className="col-sm-1 p-0">
               <input
                 type="number"
+                step={0.01}
                 min={0}
                 className="form-control"
                 {...register(`items.${i}.price`)}
@@ -123,6 +125,7 @@ const Items: React.FC<Props> = ({
             <div className="col-sm-1 p-0">
               <input
                 type="number"
+                step={0.01}
                 className="form-control"
                 {...register(`items.${i}.tax`)}
                 defaultValue={item.tax}
@@ -138,7 +141,7 @@ const Items: React.FC<Props> = ({
                 className="form-control"
                 readOnly
                 {...register(`items.${i}.priceWTax`)}
-                value={item.total}
+                defaultValue={item.total}
                 placeholder="-"
               />
             </div>

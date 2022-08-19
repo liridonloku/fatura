@@ -7,6 +7,7 @@ import Home from './components/Home';
 import { CompanyInfoType } from './components/companyInfo/companyInfo.types';
 import InvoiceCreator from './components/invoiceCreator/InvoiceCreator';
 import InvoiceViewer from './components/invoiceViewer/InvoiceViewer';
+import { InvoiceType } from './components/invoiceCreator/invoice.types';
 
 export default function App() {
   const [companyInfo, setcompanyInfo] = useState<CompanyInfoType>({
@@ -14,9 +15,15 @@ export default function App() {
     id: '600000000',
   });
 
+  const [invoice, setinvoice] = useState<InvoiceType | null>(null);
+
   const updateCompanyInfo = (info: CompanyInfoType) => {
     setcompanyInfo(info);
     localStorage.setItem('companyInfo', JSON.stringify(info));
+  };
+
+  const updateInvoice = (newInvoice: InvoiceType) => {
+    setinvoice(newInvoice);
   };
 
   // Load company info from localStorage on startup
@@ -39,8 +46,14 @@ export default function App() {
             <CompanyInfo update={updateCompanyInfo} company={companyInfo} />
           }
         />
-        <Route path="/new-invoice" element={<InvoiceCreator />} />
-        <Route path="/invoice-viewer" element={<InvoiceViewer />} />
+        <Route
+          path="/new-invoice"
+          element={<InvoiceCreator updateInvoice={updateInvoice} />}
+        />
+        <Route
+          path="/invoice-viewer"
+          element={<InvoiceViewer company={companyInfo} invoice={invoice} />}
+        />
       </Routes>
     </Router>
   );

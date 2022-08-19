@@ -8,9 +8,15 @@ import BuyerInfo from './BuyerInfo';
 import InvoiceInfo from './InvoiceInfo';
 import Items from './Items';
 
-type Props = Record<string, unknown>;
+/**
+ * The invoice creator component.
+ */
 
-const InvoiceCreator: React.FC<Props> = () => {
+type Props = {
+  updateInvoice: (newInvoice: InvoiceType) => void;
+};
+
+const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
   const navigate = useNavigate();
 
   const buyerInfo: BuyerInfoType[] = ['name', 'id', 'address', 'phone'];
@@ -45,10 +51,8 @@ const InvoiceCreator: React.FC<Props> = () => {
   }, []);
 
   const onSubmit: SubmitHandler<InvoiceType> = (data) => {
-    // eslint-disable-next-line no-console
-    console.log(data);
-    // TODO: Fix save to pdf
-    window.electron.ipcRenderer.sendMessage('testPrint', [data]);
+    updateInvoice(data);
+    navigate('/invoice-viewer');
   };
 
   return (
