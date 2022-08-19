@@ -27,7 +27,7 @@ export type BuyerInfoType = keyof BuyerType;
  */
 type DeliveryType = {
   deliveryAddress: string;
-  deliveryDate: string;
+  deliveryDate: Date;
 };
 
 /**

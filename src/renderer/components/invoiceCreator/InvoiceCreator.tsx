@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import convertInvoiceData from 'renderer/utils/convertInvoceData';
 import { InvoiceType, BuyerInfoType } from './invoice.types';
 import BuyerInfo from './BuyerInfo';
 import InvoiceInfo from './InvoiceInfo';
@@ -58,7 +59,8 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
    * @param data Form data
    */
   const onSubmit: SubmitHandler<InvoiceType> = (data) => {
-    updateInvoice(data);
+    const newData = convertInvoiceData(data);
+    updateInvoice(newData);
     navigate('/invoice-viewer');
   };
 

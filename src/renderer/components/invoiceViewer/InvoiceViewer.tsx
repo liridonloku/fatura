@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CompanyInfoType } from '../companyInfo/companyInfo.types';
 import { InvoiceType } from '../invoiceCreator/invoice.types';
 
@@ -20,6 +21,7 @@ const InvoiceViewer: React.FC<Props> = ({
   company = { name: 'Company', id: 'id' },
   invoice,
 }) => {
+  const navigate = useNavigate();
   /**
    * Renders items on the invoice
    * @param items Items to be rendered
@@ -41,10 +43,14 @@ const InvoiceViewer: React.FC<Props> = ({
   };
   // TODO: Change this
   const calculateItemTotal = (items: InvoiceType['items']) => {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return items.reduce((acc: any, current) => {
-      return acc + parseFloat(current.total);
-    }, 0);
+    return (
+      items
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .reduce((acc: any, current) => {
+          return acc + parseFloat(current.total);
+        }, 0)
+        .toFixed(2)
+    );
   };
   return (
     <div className="container">
@@ -74,7 +80,7 @@ const InvoiceViewer: React.FC<Props> = ({
         </div>
       </div>
       <div className="container-fluid d-flex justify-content-between">
-        <table className="table">
+        <table className="table table-bordered">
           <thead>
             <tr>
               <th scope="col">#</th>
@@ -95,15 +101,22 @@ const InvoiceViewer: React.FC<Props> = ({
         <table className="table w-25">
           <tbody>
             <tr>
-              <td>Total</td>
+              <td>Total:</td>
               <td>{invoice?.items && calculateItemTotal(invoice?.items)}€</td>
             </tr>
           </tbody>
         </table>
       </div>
       <div className="container text-center fixed-bottom print-none mb-3">
-        <button type="button" className="btn btn-primary">
-          Save to PDF
+        <button type="button" className="btn btn-primary me-2">
+          Save as PDF
+        </button>
+        <button
+          className="btn btn-secondary"
+          type="button"
+          onClick={() => navigate('/')}
+        >
+          Home
         </button>
       </div>
     </div>
