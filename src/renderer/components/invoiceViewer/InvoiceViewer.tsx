@@ -39,7 +39,7 @@ const InvoiceViewer: React.FC<Props> = ({
         <td className="custom-mw px-3">{item.units}</td>
         <td className="custom-mw px-3">{item.quantity}</td>
         <td className="custom-mw px-3">{item.price}€</td>
-        <td className="custom-mw px-3">{item.tax} %</td>
+        <td className="custom-mw px-3">{item.tax}%</td>
         <td className="custom-mw px-3">{item.priceWTax}€</td>
         <td className="custom-mw px-3">{item.total}€</td>
       </tr>
@@ -47,7 +47,7 @@ const InvoiceViewer: React.FC<Props> = ({
   };
 
   // Calculates the sum of all invoice items
-  const calculateItemTotal = (items: InvoiceType['items']) => {
+  const calculateTotal = (items: InvoiceType['items']) => {
     return (
       items
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -61,6 +61,13 @@ const InvoiceViewer: React.FC<Props> = ({
   const saveToPDF = async () => {
     setloading(true);
     await window.electron.ipcRenderer.invoke('save-to-pdf', [invoice]);
+    setloading(false);
+  };
+
+  const printInvoice = async () => {
+    setloading(true);
+    window.print();
+    // await window.electron.ipcRenderer.invoke('print', []);
     setloading(false);
   };
 
@@ -119,7 +126,7 @@ const InvoiceViewer: React.FC<Props> = ({
           <tbody>
             <tr>
               <td>Total:</td>
-              <td>{invoice?.items && calculateItemTotal(invoice?.items)}€</td>
+              <td>{invoice?.items && calculateTotal(invoice?.items)}€</td>
             </tr>
           </tbody>
         </table>
@@ -132,6 +139,14 @@ const InvoiceViewer: React.FC<Props> = ({
           disabled={loading}
         >
           Save as PDF
+        </button>
+        <button
+          type="button"
+          className="btn btn-success me-2"
+          onClick={() => printInvoice()}
+          disabled={loading}
+        >
+          Print
         </button>
         <button
           className="btn btn-secondary"

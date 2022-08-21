@@ -68,6 +68,29 @@ ipcMain.handle('save-to-pdf', async (_event, args) => {
   return 'File not saved';
 });
 
+// Will not work if device doesn't have a default printer, using window.print() instead
+ipcMain.handle('print', async () => {
+  const win = BrowserWindow.getFocusedWindow();
+  const options = {
+    silent: false,
+    printBackground: false,
+    color: false,
+    margin: {
+      marginType: 'printableArea',
+    },
+    landscape: false,
+    pagesPerSheet: 1,
+    collate: false,
+    copies: 1,
+    header: 'Header of the Page',
+    footer: 'Footer of the Page',
+  };
+  win?.webContents.print(options, (success, error) => {
+    if (!success) return error;
+    return 'Print successful';
+  });
+});
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();

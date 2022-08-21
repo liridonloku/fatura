@@ -6,7 +6,11 @@ type Props = {
 };
 
 const Header: React.FC<Props> = ({ company }) => {
-  return <div>{company.name || 'Update Company information'}</div>;
+  return (
+    <div className="d-print-none">
+      {company.name || 'Update Company information'}
+    </div>
+  );
 };
 
 export default Header;
