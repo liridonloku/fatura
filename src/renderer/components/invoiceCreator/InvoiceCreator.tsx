@@ -47,6 +47,8 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
         quantity: 0,
         price: 0,
         tax: 0,
+        priceWTax: '0',
+        total: '0',
       },
       { shouldFocus: false }
     );

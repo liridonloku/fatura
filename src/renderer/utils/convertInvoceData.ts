@@ -5,7 +5,7 @@ import { InvoiceType } from 'renderer/components/invoiceCreator/invoice.types';
  * This function converts the data from the submitHandler to the correct types.
  * Some number and date inputs return as strings that TypeScript will not catch,
  * these are converted to the correct type here.
- * @param data Invoice data
+ * @param data Invoice data from form
  * @returns Invoice data with correct types
  */
 const convertInvoiceData = (data: InvoiceType) => {
@@ -18,13 +18,16 @@ const convertInvoiceData = (data: InvoiceType) => {
   if (newData.delivery && data.delivery?.deliveryDate) {
     newData.delivery.deliveryDate = new Date(data.delivery.deliveryDate);
   }
-  // Convert item price and quantity to floats
+
+  // Convert some item properties to numbers
   const newItems = data.items.map((item: any) => {
     item.price = parseFloat(item.price);
     item.quantity = parseFloat(item.quantity);
+    item.tax = parseFloat(item.tax);
     return item;
   });
   newData.items = newItems;
+
   return newData;
 };
 

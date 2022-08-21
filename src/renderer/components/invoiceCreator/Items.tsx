@@ -102,6 +102,7 @@ const Items: React.FC<Props> = ({
                 {...register(`items.${i}.description`)}
                 defaultValue={item.description}
                 placeholder="Description"
+                required
               />
             </div>
             <div className="col-sm-1 p-0">
@@ -116,6 +117,7 @@ const Items: React.FC<Props> = ({
                 onInput={(e) => {
                   updateTotal(e, i);
                 }}
+                required
               />
             </div>
             <div className="col-sm-1 p-0">
@@ -130,6 +132,7 @@ const Items: React.FC<Props> = ({
                 onInput={(e) => {
                   updateTotal(e, i);
                 }}
+                required
               />
             </div>
             <div className="col-sm-1 p-0">
@@ -143,6 +146,7 @@ const Items: React.FC<Props> = ({
                 onInput={(e) => {
                   updateTotal(e, i);
                 }}
+                required
               />
             </div>
             <div className="col-sm-1 p-0">
@@ -161,7 +165,7 @@ const Items: React.FC<Props> = ({
                 className="form-control text-end"
                 readOnly
                 {...register(`items.${i}.total`)}
-                value={item.total}
+                defaultValue={item.total}
                 placeholder="-"
               />
             </div>
