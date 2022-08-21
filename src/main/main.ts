@@ -10,7 +10,7 @@
  */
 import path from 'path';
 import fs from 'fs';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -32,36 +32,37 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
-// TODO: Fix save to PDF
-ipcMain.on('testPrint', async (event, args) => {
-  const filepath1 = path.join(
+ipcMain.on('save-to-pdf', async (event, args) => {
+  const defaultPath = path.join(
     __dirname,
     `../../assets/${args[0].invoiceNo}.pdf`
   );
   const win = BrowserWindow.getFocusedWindow();
   if (win) {
-    // TODO: Fix Save to PDF
-    console.log(filepath1);
-    console.log(win.getSize());
+    const savePath = dialog.showSaveDialogSync(win, {
+      defaultPath,
+    });
     win.webContents
       .printToPDF({
         marginsType: 2,
         pageSize: 'A4',
       })
       .then((data) => {
-        fs.writeFile(filepath1, data, (err) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log('PDF Generated Successfully');
-          }
-        });
+        if (savePath) {
+          fs.writeFile(savePath, data, (err) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log('PDF Generated Successfully');
+            }
+          });
+        }
       })
       .catch((error) => {
         console.log(error);
       });
     console.log(args);
-    event.reply('testPrint', 'test successful');
+    event.reply('save-to-pdf', 'File successfully saved');
   }
 });
 

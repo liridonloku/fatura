@@ -41,7 +41,8 @@ const InvoiceViewer: React.FC<Props> = ({
       </tr>
     ));
   };
-  // TODO: Change this
+
+  // Calculates the sum of all invoice items
   const calculateItemTotal = (items: InvoiceType['items']) => {
     return (
       items
@@ -52,12 +53,19 @@ const InvoiceViewer: React.FC<Props> = ({
         .toFixed(2)
     );
   };
+
+  const saveToPDF = () => {
+    window.electron.ipcRenderer.sendMessage('save-to-pdf', [invoice]);
+  };
+
   return (
-    <div className="container">
+    <div className="invoice px-3">
       <div className="container-fluid d-flex justify-content-between">
         <div>
           <h1 className="fs-3">Invoice no: {invoice?.invoiceNo}</h1>
-          <p className="fs-4">Date: {invoice?.invoiceDate.toString()}</p>
+          <p className="fs-4">
+            Date: {invoice?.invoiceDate.toLocaleDateString('tr')}
+          </p>
         </div>
         <div className="d-flex align-items-center">
           <h2>Logo</h2>
@@ -107,8 +115,12 @@ const InvoiceViewer: React.FC<Props> = ({
           </tbody>
         </table>
       </div>
-      <div className="container text-center fixed-bottom print-none mb-3">
-        <button type="button" className="btn btn-primary me-2">
+      <div className="container text-center fixed-bottom print-none mb-3 d-print-none">
+        <button
+          type="button"
+          className="btn btn-primary me-2"
+          onClick={() => saveToPDF()}
+        >
           Save as PDF
         </button>
         <button
