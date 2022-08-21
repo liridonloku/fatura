@@ -19,3 +19,13 @@ fieldset.items input,
 fieldset.items button {
   font-size: 12px;
 }
+
+@media (min-width: 1200px) {
+  .custom-mw {
+    width: 150px;
+  }
+
+  .custom-mw.no {
+    width: 50px;
+  }
+}

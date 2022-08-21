@@ -36,6 +36,7 @@ type DeliveryType = {
 export type ItemType = {
   description: string;
   quantity: number;
+  units: string;
   price: number;
   tax: number;
   priceWTax: string;

@@ -70,7 +70,8 @@ const Items: React.FC<Props> = ({
       <div className="container-fluid d-flex justify-content-between align-items-center">
         <div>No.</div>
         <div className="row flex-grow-1 mx-0 px-1 text-center align-items-center">
-          <div className="col-sm-6 p-0">Description</div>
+          <div className="col-sm-5 p-0">Description</div>
+          <div className="col-sm-1 p-0">Units</div>
           <div className="col-sm-1 p-0">Qty.</div>
           <div className="col-sm-1 p-0">Price</div>
           <div className="col-sm-1 p-0">Tax %</div>
@@ -95,13 +96,25 @@ const Items: React.FC<Props> = ({
             className="row flex-grow-1 mx-0 px-1 text-center align-items-center"
             key={item.id}
           >
-            <div className="col-sm-6 p-0">
+            <div className="col-sm-5 p-0">
               <input
                 type="text"
                 className="form-control"
                 {...register(`items.${i}.description`)}
                 defaultValue={item.description}
                 placeholder="Description"
+                required
+              />
+            </div>
+            <div className="col-sm-1 p-0">
+              <input
+                type="text"
+                step={0.01}
+                min={0}
+                className="form-control"
+                {...register(`items.${i}.units`)}
+                defaultValue={item.units}
+                placeholder="Units"
                 required
               />
             </div>
@@ -187,6 +200,7 @@ const Items: React.FC<Props> = ({
           onClick={() =>
             append({
               description: '',
+              units: '',
               quantity: 0,
               price: 0,
               tax: 0,

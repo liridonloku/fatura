@@ -44,6 +44,7 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
     append(
       {
         description: '',
+        units: '',
         quantity: 0,
         price: 0,
         tax: 0,

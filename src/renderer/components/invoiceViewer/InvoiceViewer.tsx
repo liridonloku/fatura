@@ -34,13 +34,14 @@ const InvoiceViewer: React.FC<Props> = ({
     return items.map((item, index) => (
       // eslint-disable-next-line react/no-array-index-key
       <tr key={index}>
-        <td>{index + 1}</td>
-        <td>{item.description}</td>
-        <td>{item.quantity}</td>
-        <td>{item.price}€</td>
-        <td>{item.tax} %</td>
-        <td>{item.priceWTax}€</td>
-        <td>{item.total}€</td>
+        <td className="custom-mw no">{index + 1}</td>
+        <td className="text-start">{item.description}</td>
+        <td className="custom-mw px-3">{item.units}</td>
+        <td className="custom-mw px-3">{item.quantity}</td>
+        <td className="custom-mw px-3">{item.price}€</td>
+        <td className="custom-mw px-3">{item.tax} %</td>
+        <td className="custom-mw px-3">{item.priceWTax}€</td>
+        <td className="custom-mw px-3">{item.total}€</td>
       </tr>
     ));
   };
@@ -93,11 +94,14 @@ const InvoiceViewer: React.FC<Props> = ({
         </div>
       </div>
       <div className="container-fluid d-flex justify-content-between">
-        <table className="table table-bordered">
+        <table className="table table-bordered text-center">
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">Description</th>
+              <th scope="col" className="text-start">
+                Description
+              </th>
+              <th scope="col">Units</th>
               <th scope="col">Qty.</th>
               <th scope="col">Price</th>
               <th scope="col">Tax</th>
