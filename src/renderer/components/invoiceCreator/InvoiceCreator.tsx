@@ -81,7 +81,11 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
       <div className="container-xl">
         <form
           onSubmit={handleSubmit(onSubmit)}
-          onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
+          onKeyDown={(e) =>
+            e.key === 'Enter' &&
+            document.activeElement?.nodeName !== 'BUTTON' &&
+            e.preventDefault()
+          }
         >
           <BuyerInfo buyerInfo={buyerInfo} register={register} />
           <InvoiceInfo register={register} />
