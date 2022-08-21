@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CompanyInfoType } from '../companyInfo/companyInfo.types';
 import { InvoiceType } from '../invoiceCreator/invoice.types';
+import StyledInvoiceViewer from './InvoiceViewer.styled';
 
 type Props = {
   /**
@@ -33,16 +34,16 @@ const InvoiceViewer: React.FC<Props> = ({
   const renderItems = (items: InvoiceType['items']) => {
     return items.map((item, index) => (
       // eslint-disable-next-line react/no-array-index-key
-      <tr key={index}>
-        <td className="custom-mw no">{index + 1}</td>
-        <td className="text-start">{item.description}</td>
-        <td className="custom-mw px-3">{item.units}</td>
-        <td className="custom-mw px-3">{item.quantity}</td>
-        <td className="custom-mw px-3">{item.price}€</td>
-        <td className="custom-mw px-3">{item.tax}%</td>
-        <td className="custom-mw px-3">{item.priceWTax}€</td>
-        <td className="custom-mw px-3">{item.total}€</td>
-      </tr>
+      <div className="item" key={index}>
+        <div className="no">{index + 1}</div>
+        <div className="description">{item.description}</div>
+        <div className="units">{item.units}</div>
+        <div className="qty">{item.quantity}</div>
+        <div className="price">{item.price}€</div>
+        <div className="tax">{item.tax}%</div>
+        <div className="price-w-tax">{item.priceWTax}€</div>
+        <div className="total">{item.total}€</div>
+      </div>
     ));
   };
 
@@ -72,19 +73,40 @@ const InvoiceViewer: React.FC<Props> = ({
   };
 
   return (
-    <div className="invoice px-3">
-      <div className="container-fluid d-flex justify-content-between">
-        <div>
-          <h1 className="fs-3">Invoice no: {invoice?.invoiceNo}</h1>
-          <p className="fs-4">
-            Date: {invoice?.invoiceDate.toLocaleDateString('tr')}
-          </p>
+    <StyledInvoiceViewer>
+      <div className="logo-container">
+        <div className="logo">
+          <h1>Logo</h1>
         </div>
-        <div className="d-flex align-items-center">
-          <h2>Logo</h2>
+        <div className="invoice-no">
+          <h2>
+            <span>Invoice: </span>
+            {invoice?.invoiceNo}
+          </h2>
+          <h3>
+            <span>Date: </span>
+            {invoice?.invoiceDate.toLocaleDateString('tr')}
+          </h3>
         </div>
       </div>
-      <div className="container-fluid mb-4 d-flex justify-content-between">
+      <div className="seller-buyer-delivery">
+        <div>
+          <p className="mb-0 fw-bold">Seller:</p>
+          <p className="mb-0">{company.name}</p>
+          <p className="mb-0">{company.id}</p>
+          <p className="mb-0">{company.address}</p>
+          <p className="mb-0">{company.phone}</p>
+        </div>
+        {(invoice?.delivery?.deliveryAddress ||
+          invoice?.delivery?.deliveryDate) && (
+          <div>
+            <p className="mb-0 fw-bold">Delivery</p>
+            <p className="mb-0">
+              Date: {invoice.delivery.deliveryDate.toLocaleDateString('tr')}
+            </p>
+            <p className="mb-0">Address: {invoice.delivery.deliveryAddress}</p>
+          </div>
+        )}
         <div>
           <p className="mb-0 fw-bold">Bill to:</p>
           <p className="mb-0">{invoice?.buyer.name}</p>
@@ -92,45 +114,30 @@ const InvoiceViewer: React.FC<Props> = ({
           <p className="mb-0">{invoice?.buyer.address}</p>
           <p className="mb-0">{invoice?.buyer.phone}</p>
         </div>
-        <div>
-          <p className="mb-0 fw-bold">From:</p>
-          <p className="mb-0">{company.name}</p>
-          <p className="mb-0">{company.id}</p>
-          <p className="mb-0">{company.address}</p>
-          <p className="mb-0">{company.phone}</p>
+      </div>
+      <div className="items">
+        <div className="items-header">
+          <div className="no">#</div>
+          <div className="description">Description</div>
+          <div className="units">Units</div>
+          <div className="qty">Qty.</div>
+          <div className="price">Price</div>
+          <div className="tax">Tax %</div>
+          <div className="price-w-tax">Price with tax</div>
+          <div className="total">Total</div>
         </div>
+        <div>{invoice?.items && renderItems(invoice.items)}</div>
       </div>
-      <div className="container-fluid d-flex justify-content-between">
-        <table className="table table-bordered text-center">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col" className="text-start">
-                Description
-              </th>
-              <th scope="col">Units</th>
-              <th scope="col">Qty.</th>
-              <th scope="col">Price</th>
-              <th scope="col">Tax</th>
-              <th scope="col">
-                Price <br /> with tax
-              </th>
-              <th scope="col">Total</th>
-            </tr>
-          </thead>
-          <tbody>{invoice?.items && renderItems(invoice.items)}</tbody>
-        </table>
-      </div>
-      <div className="container-fluid d-flex justify-content-end">
-        <table className="table w-25">
-          <tbody>
-            <tr>
-              <td>Total:</td>
-              <td>{invoice?.items && calculateTotal(invoice?.items)}€</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      {invoice?.items && (
+        <div className="calculations-container">
+          <div className="labels">
+            <p>Total: </p>
+          </div>
+          <div className="calculations">
+            <p>{calculateTotal(invoice.items)}€</p>
+          </div>
+        </div>
+      )}
       <div className="container text-center fixed-bottom print-none mb-3 d-print-none">
         <button
           type="button"
@@ -157,7 +164,7 @@ const InvoiceViewer: React.FC<Props> = ({
           Home
         </button>
       </div>
-    </div>
+    </StyledInvoiceViewer>
   );
 };
 
