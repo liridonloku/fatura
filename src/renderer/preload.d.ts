@@ -5,6 +5,8 @@ declare global {
     electron: {
       ipcRenderer: {
         sendMessage(channel: Channels, args: unknown[]): void;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        invoke(channel: Channels, args: unknown[]): Promise<any>;
         on(
           channel: string,
           func: (...args: unknown[]) => void

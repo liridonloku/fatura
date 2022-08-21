@@ -32,7 +32,7 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
-ipcMain.on('save-to-pdf', async (event, args) => {
+ipcMain.handle('save-to-pdf', async (_event, args) => {
   const defaultPath = path.join(
     __dirname,
     `../../assets/${args[0].invoiceNo}.pdf`
@@ -52,18 +52,20 @@ ipcMain.on('save-to-pdf', async (event, args) => {
           fs.writeFile(savePath, data, (err) => {
             if (err) {
               console.log(err);
-            } else {
-              console.log('PDF Generated Successfully');
+              return err;
             }
+            console.log('PDF Generated Successfully');
+            return 'File successfully saved';
           });
         }
+        return 'Save canceled';
       })
       .catch((error) => {
         console.log(error);
+        return error;
       });
-    console.log(args);
-    event.reply('save-to-pdf', 'File successfully saved');
   }
+  return 'File not saved';
 });
 
 if (process.env.NODE_ENV === 'production') {

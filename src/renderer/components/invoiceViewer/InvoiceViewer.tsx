@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CompanyInfoType } from '../companyInfo/companyInfo.types';
 import { InvoiceType } from '../invoiceCreator/invoice.types';
@@ -22,6 +22,9 @@ const InvoiceViewer: React.FC<Props> = ({
   invoice,
 }) => {
   const navigate = useNavigate();
+
+  const [loading, setloading] = useState(false);
+
   /**
    * Renders items on the invoice
    * @param items Items to be rendered
@@ -54,8 +57,10 @@ const InvoiceViewer: React.FC<Props> = ({
     );
   };
 
-  const saveToPDF = () => {
-    window.electron.ipcRenderer.sendMessage('save-to-pdf', [invoice]);
+  const saveToPDF = async () => {
+    setloading(true);
+    await window.electron.ipcRenderer.invoke('save-to-pdf', [invoice]);
+    setloading(false);
   };
 
   return (
@@ -120,6 +125,7 @@ const InvoiceViewer: React.FC<Props> = ({
           type="button"
           className="btn btn-primary me-2"
           onClick={() => saveToPDF()}
+          disabled={loading}
         >
           Save as PDF
         </button>
@@ -127,6 +133,7 @@ const InvoiceViewer: React.FC<Props> = ({
           className="btn btn-secondary"
           type="button"
           onClick={() => navigate('/')}
+          disabled={loading}
         >
           Home
         </button>
