@@ -39,7 +39,7 @@ const InvoiceViewer: React.FC<Props> = ({
         <div className="description">{item.description}</div>
         <div className="units">{item.units}</div>
         <div className="qty">{item.quantity}</div>
-        <div className="price">{item.price}€</div>
+        <div className="price">{item.price.toFixed(2)}€</div>
         <div className="tax">{item.tax}%</div>
         <div className="price-w-tax">{item.priceWTax}€</div>
         <div className="total">{item.total}€</div>
@@ -54,6 +54,17 @@ const InvoiceViewer: React.FC<Props> = ({
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .reduce((acc: any, current) => {
           return acc + parseFloat(current.total);
+        }, 0)
+        .toFixed(2)
+    );
+  };
+
+  const calculateTotalWithoutTax = (items: InvoiceType['items']) => {
+    return (
+      items
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        .reduce((acc: any, current) => {
+          return acc + current.quantity * current.price;
         }, 0)
         .toFixed(2)
     );
@@ -130,11 +141,30 @@ const InvoiceViewer: React.FC<Props> = ({
       </div>
       {invoice?.items && (
         <div className="calculations-container">
+          <div className="comment-box">
+            <p>Comment:</p>
+          </div>
           <div className="labels">
             <p>Total: </p>
+            <p>Total without tax: </p>
+            <p>Tax: </p>
+            <p className="amount-due">
+              <b>Amount Due: </b>
+            </p>
           </div>
           <div className="calculations">
             <p>{calculateTotal(invoice.items)}€</p>
+            <p>{calculateTotalWithoutTax(invoice.items)}€</p>
+            <p>
+              {(
+                parseFloat(calculateTotal(invoice.items)) -
+                parseFloat(calculateTotalWithoutTax(invoice.items))
+              ).toFixed(2)}
+              €
+            </p>
+            <p className="amount-due">
+              <b>{calculateTotal(invoice.items)}€</b>
+            </p>
           </div>
         </div>
       )}

@@ -8,7 +8,7 @@ const StyledInvoiceViewer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    margin-bottom: 48px;
 
     .logo {
       height: 100px;
@@ -40,7 +40,7 @@ const StyledInvoiceViewer = styled.div`
   .seller-buyer-delivery {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 24px;
+    margin-bottom: 48px;
 
     div {
       min-width: 100px;
@@ -109,6 +109,32 @@ const StyledInvoiceViewer = styled.div`
     display: flex;
     justify-content: flex-end;
     padding: 16px 0;
+
+    div {
+      p {
+        margin: 0;
+        margin-bottom: 5px;
+      }
+
+      .amount-due {
+        padding: 5px 0;
+        border-top: 1px solid black;
+        border-bottom: 1px solid black;
+        margin-bottom: 0;
+      }
+    }
+
+    .comment-box {
+      flex-grow: 1;
+      padding: 0 16px;
+      margin-right: 100px;
+    }
+
+    .labels {
+      p {
+        text-align: right;
+      }
+    }
 
     .calculations {
       width: 15%;
