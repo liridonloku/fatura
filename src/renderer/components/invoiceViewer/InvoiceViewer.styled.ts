@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 
+/**
+ * Styles for Invoice Viewer - Styled Components
+ */
 const StyledInvoiceViewer = styled.div`
   padding: 16px;
   min-height: 150vw;
+  max-width: 1200px;
+  margin: 0 auto;
 
   .logo-container {
     display: flex;
@@ -45,6 +50,11 @@ const StyledInvoiceViewer = styled.div`
     div {
       min-width: 100px;
       max-width: 25%;
+    }
+
+    .buyer {
+      /* Fixes small overflow on print */
+      padding-right: 10px;
     }
   }
 

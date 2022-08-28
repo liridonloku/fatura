@@ -60,6 +60,7 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
    * Calls the updateInvoice prop to set the data as invoice state
    * then navigates to the viewer component
    * @param data Form data
+   * @returns void
    */
   const onSubmit: SubmitHandler<InvoiceType> = (data) => {
     const newData = convertInvoiceData(data);

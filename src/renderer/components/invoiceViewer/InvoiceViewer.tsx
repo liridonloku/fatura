@@ -118,7 +118,7 @@ const InvoiceViewer: React.FC<Props> = ({
             <p className="mb-0">Address: {invoice.delivery.deliveryAddress}</p>
           </div>
         )}
-        <div>
+        <div className="buyer">
           <p className="mb-0 fw-bold">Bill to:</p>
           <p className="mb-0">{invoice?.buyer.name}</p>
           <p className="mb-0">{invoice?.buyer.id}</p>

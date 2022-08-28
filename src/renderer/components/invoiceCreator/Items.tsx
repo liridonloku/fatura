@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useState } from 'react';
 import {
   FieldArrayMethodProps,
   FieldArrayWithId,
@@ -35,13 +36,31 @@ const Items: React.FC<Props> = ({
   getValues,
   setValue,
 }) => {
+  const [totals, settotals] = useState({
+    total: 0,
+    totalWithoutTax: 0,
+    tax: 0,
+  });
+
+  const calculateInvoiceTotals = () => {
+    const invoice = getValues();
+    const total = invoice.items.reduce((acc, current) => {
+      return acc + parseFloat(current.total);
+    }, 0);
+    const totalWithoutTax = invoice.items.reduce((acc, current) => {
+      return acc + current.quantity * current.price;
+    }, 0);
+    const tax = total - totalWithoutTax;
+    settotals({ total, totalWithoutTax, tax });
+  };
+
   /**
    * Updates the 'total' and 'priceWTax' inputs of an item when quantity, price
    * or tax changes
    * @param e Event from the input element that has changed
    * @param i The field from FieldArray that has changed
    */
-  const updateTotal = (e: React.FormEvent<HTMLInputElement>, i: number) => {
+  const updateItemTotal = (e: React.FormEvent<HTMLInputElement>, i: number) => {
     const values = getValues(`items.${i}`);
     let { quantity, price, tax } = values;
     if (e.currentTarget.getAttribute('name')?.includes('quantity')) {
@@ -62,6 +81,7 @@ const Items: React.FC<Props> = ({
     const displayTotal = Number.isNaN(total) ? '0' : total.toFixed(2);
     setValue(`items.${i}.total`, displayTotal);
     setValue(`items.${i}.priceWTax`, displayPriceWTax);
+    calculateInvoiceTotals();
   };
 
   return (
@@ -128,7 +148,7 @@ const Items: React.FC<Props> = ({
                 defaultValue={item.quantity}
                 placeholder="Quantity"
                 onInput={(e) => {
-                  updateTotal(e, i);
+                  updateItemTotal(e, i);
                 }}
                 required
               />
@@ -143,7 +163,7 @@ const Items: React.FC<Props> = ({
                 defaultValue={item.price}
                 placeholder="Price"
                 onInput={(e) => {
-                  updateTotal(e, i);
+                  updateItemTotal(e, i);
                 }}
                 required
               />
@@ -157,7 +177,7 @@ const Items: React.FC<Props> = ({
                 defaultValue={item.tax}
                 placeholder="18"
                 onInput={(e) => {
-                  updateTotal(e, i);
+                  updateItemTotal(e, i);
                 }}
                 required
               />
@@ -212,6 +232,44 @@ const Items: React.FC<Props> = ({
         >
           Add item
         </button>
+      </div>
+      <div className="container-fluid d-flex flex-column align-items-end">
+        <div className="col-sm-4 d-flex align-items-center gap-2">
+          <label htmlFor="total" className="fs-6 flex-grow-1">
+            Total
+          </label>
+          <input
+            type="text"
+            readOnly
+            id="total"
+            className="form-control text-end"
+            onChange={() => calculateInvoiceTotals()}
+            value={`${totals.total.toFixed(2)}€`}
+          />
+          <div className="px-1 text-center d-flex align-items-center">
+            <button type="button" className="btn btn-outline-danger invisible">
+              Del
+            </button>
+          </div>
+        </div>
+        <div className="col-sm-4 d-flex align-items-center gap-2">
+          <label htmlFor="totalWithoutTax" className="fs-6">
+            Total without tax
+          </label>
+          <input
+            type="text"
+            readOnly
+            id="totalWithoutTax"
+            className="form-control text-end"
+            onChange={() => calculateInvoiceTotals()}
+            value={`${totals.totalWithoutTax.toFixed(2)}€`}
+          />
+          <div className="px-1 text-center d-flex align-items-center">
+            <button type="button" className="btn btn-outline-danger invisible">
+              Del
+            </button>
+          </div>
+        </div>
       </div>
     </fieldset>
   );
