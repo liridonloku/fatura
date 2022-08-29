@@ -49,25 +49,19 @@ const InvoiceViewer: React.FC<Props> = ({
 
   // Calculates the sum of all invoice items
   const calculateTotal = (items: InvoiceType['items']) => {
-    return (
-      items
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .reduce((acc: any, current) => {
-          return acc + parseFloat(current.total);
-        }, 0)
-        .toFixed(2)
-    );
+    return items
+      .reduce((acc, current) => {
+        return acc + parseFloat(current.total);
+      }, 0)
+      .toFixed(2);
   };
 
   const calculateTotalWithoutTax = (items: InvoiceType['items']) => {
-    return (
-      items
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        .reduce((acc: any, current) => {
-          return acc + current.quantity * current.price;
-        }, 0)
-        .toFixed(2)
-    );
+    return items
+      .reduce((acc, current) => {
+        return acc + current.quantity * current.price;
+      }, 0)
+      .toFixed(2);
   };
 
   const saveToPDF = async () => {

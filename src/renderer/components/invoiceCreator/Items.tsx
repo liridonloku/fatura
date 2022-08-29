@@ -47,9 +47,10 @@ const Items: React.FC<Props> = ({
     const total = invoice.items.reduce((acc, current) => {
       return acc + parseFloat(current.total);
     }, 0);
-    const totalWithoutTax = invoice.items.reduce((acc, current) => {
+    let totalWithoutTax = invoice.items.reduce((acc, current) => {
       return acc + current.quantity * current.price;
     }, 0);
+    totalWithoutTax = Number.isNaN(totalWithoutTax) ? 0 : totalWithoutTax;
     const tax = total - totalWithoutTax;
     settotals({ total, totalWithoutTax, tax });
   };
@@ -79,6 +80,9 @@ const Items: React.FC<Props> = ({
       ? '0'
       : priceWTax.toFixed(2);
     const displayTotal = Number.isNaN(total) ? '0' : total.toFixed(2);
+    setValue(`items.${i}.quantity`, quantity);
+    setValue(`items.${i}.price`, price);
+    setValue(`items.${i}.tax`, tax);
     setValue(`items.${i}.total`, displayTotal);
     setValue(`items.${i}.priceWTax`, displayPriceWTax);
     calculateInvoiceTotals();
@@ -175,7 +179,7 @@ const Items: React.FC<Props> = ({
                 className="form-control"
                 {...register(`items.${i}.tax`)}
                 defaultValue={item.tax}
-                placeholder="18"
+                placeholder="0"
                 onInput={(e) => {
                   updateItemTotal(e, i);
                 }}
@@ -185,11 +189,11 @@ const Items: React.FC<Props> = ({
             <div className="col-sm-1 p-0">
               <input
                 type="text"
-                className="form-control"
+                className="form-control px-1 text-center"
                 readOnly
                 {...register(`items.${i}.priceWTax`)}
                 defaultValue={item.total}
-                placeholder="-"
+                placeholder="0"
               />
             </div>
             <div className="col-sm-2 p-0">
@@ -234,37 +238,69 @@ const Items: React.FC<Props> = ({
         </button>
       </div>
       <div className="container-fluid d-flex flex-column align-items-end">
-        <div className="col-sm-4 d-flex align-items-center gap-2">
-          <label htmlFor="total" className="fs-6 flex-grow-1">
+        <div className="col-sm-4 d-flex align-items-center gap-2 mb-2">
+          <label htmlFor="total" className="fs-6 w-75 text-end">
             Total
           </label>
           <input
             type="text"
             readOnly
             id="total"
-            className="form-control text-end"
-            onChange={() => calculateInvoiceTotals()}
+            className="form-control text-end w-50"
             value={`${totals.total.toFixed(2)}€`}
           />
-          <div className="px-1 text-center d-flex align-items-center">
+          <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">
               Del
             </button>
           </div>
         </div>
-        <div className="col-sm-4 d-flex align-items-center gap-2">
-          <label htmlFor="totalWithoutTax" className="fs-6">
+        <div className="col-sm-4 d-flex align-items-center gap-2 mb-2">
+          <label htmlFor="totalWithoutTax" className="fs-6 w-75 text-end">
             Total without tax
           </label>
           <input
             type="text"
             readOnly
             id="totalWithoutTax"
-            className="form-control text-end"
-            onChange={() => calculateInvoiceTotals()}
+            className="form-control text-end w-50"
             value={`${totals.totalWithoutTax.toFixed(2)}€`}
           />
-          <div className="px-1 text-center d-flex align-items-center">
+          <div className="text-center d-flex align-items-center">
+            <button type="button" className="btn btn-outline-danger invisible">
+              Del
+            </button>
+          </div>
+        </div>
+        <div className="col-sm-4 d-flex align-items-center gap-2 mb-2">
+          <label htmlFor="total" className="fs-6 w-75 text-end">
+            Tax
+          </label>
+          <input
+            type="text"
+            readOnly
+            id="total"
+            className="form-control text-end w-50"
+            value={`${totals.tax.toFixed(2)}€`}
+          />
+          <div className="text-center d-flex align-items-center">
+            <button type="button" className="btn btn-outline-danger invisible">
+              Del
+            </button>
+          </div>
+        </div>
+        <div className="col-sm-4 d-flex align-items-center gap-2 mb-2">
+          <label htmlFor="total" className="fs-6 fw-bold w-75 text-end">
+            Amount Due
+          </label>
+          <input
+            type="text"
+            readOnly
+            id="total"
+            className="form-control text-end fw-bold w-50"
+            value={`${totals.total.toFixed(2)}€`}
+          />
+          <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">
               Del
             </button>
