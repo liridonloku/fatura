@@ -159,6 +159,22 @@ const StyledInvoiceViewer = styled.div`
     }
   }
 
+  .signings {
+    padding: 50px;
+    display: flex;
+    justify-content: space-between;
+
+    p {
+      border-top: 1px solid black;
+      padding: 0 50px;
+    }
+  }
+
+  .footer {
+    border-top: 2px solid black;
+    padding: 10px 0;
+  }
+
   @media print {
     width: 1100px;
   }

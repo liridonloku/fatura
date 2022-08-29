@@ -167,7 +167,18 @@ const InvoiceViewer: React.FC<Props> = ({
           </div>
         </div>
       )}
-      <div className="">a</div>
+      <div className="signings">
+        <p>Seller</p>
+        <p>Buyer</p>
+      </div>
+      <div className="footer">
+        <p className="fw-bold">Bank accounts:</p>
+        {company.bankAccounts?.map((account) => (
+          <p className="mb-0">
+            {account.bank}: {account.accountNumber}
+          </p>
+        ))}
+      </div>
       <div className="container text-center fixed-bottom print-none mb-3 d-print-none">
         <button
           type="button"
