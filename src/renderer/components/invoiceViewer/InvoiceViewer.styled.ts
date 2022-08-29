@@ -8,6 +8,8 @@ const StyledInvoiceViewer = styled.div`
   min-height: 150vw;
   max-width: 1200px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
 
   .logo-container {
     display: flex;
@@ -110,6 +112,10 @@ const StyledInvoiceViewer = styled.div`
       border-bottom: 2px solid black;
     }
 
+    .items-body {
+      border-bottom: 1px solid black;
+    }
+
     .item {
       border-bottom: 1px solid #6c757d;
     }
@@ -119,6 +125,7 @@ const StyledInvoiceViewer = styled.div`
     display: flex;
     justify-content: flex-end;
     padding: 16px 0;
+    flex-grow: 1;
 
     div {
       p {

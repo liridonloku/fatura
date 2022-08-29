@@ -52,4 +52,5 @@ export type InvoiceType = {
   invoiceNo: string;
   invoiceDate: Date;
   items: ItemType[];
+  additionalInfo: string;
 };

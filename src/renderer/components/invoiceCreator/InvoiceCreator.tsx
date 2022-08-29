@@ -8,6 +8,7 @@ import { InvoiceType, BuyerInfoType } from './invoice.types';
 import BuyerInfo from './BuyerInfo';
 import InvoiceInfo from './InvoiceInfo';
 import Items from './Items';
+import CommentBox from './CommentBox';
 
 type Props = {
   /**
@@ -99,6 +100,7 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
             getValues={getValues}
             setValue={setValue}
           />
+          <CommentBox register={register} />
           <div className="text-center mb-5">
             <button type="submit" className="btn btn-success mt-3">
               Print/Export

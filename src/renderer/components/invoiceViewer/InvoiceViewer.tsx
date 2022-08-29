@@ -131,12 +131,17 @@ const InvoiceViewer: React.FC<Props> = ({
           <div className="price-w-tax">Price with tax</div>
           <div className="total">Total</div>
         </div>
-        <div>{invoice?.items && renderItems(invoice.items)}</div>
+        <div className="items-body">
+          {invoice?.items && renderItems(invoice.items)}
+        </div>
       </div>
       {invoice?.items && (
         <div className="calculations-container">
           <div className="comment-box">
-            <p>Comment:</p>
+            <p>
+              <b>Additional information: </b> <br />
+              {invoice.additionalInfo}
+            </p>
           </div>
           <div className="labels">
             <p>Total: </p>
@@ -162,6 +167,7 @@ const InvoiceViewer: React.FC<Props> = ({
           </div>
         </div>
       )}
+      <div className="">a</div>
       <div className="container text-center fixed-bottom print-none mb-3 d-print-none">
         <button
           type="button"
