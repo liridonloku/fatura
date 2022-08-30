@@ -15,11 +15,18 @@ export default function App() {
     id: '600000000',
   });
 
+  const [logo, setlogo] = useState('');
+
   const [invoice, setinvoice] = useState<InvoiceType | null>(null);
 
   const updateCompanyInfo = (info: CompanyInfoType) => {
     setcompanyInfo(info);
     localStorage.setItem('companyInfo', JSON.stringify(info));
+  };
+
+  const updateLogo = (path: string) => {
+    setlogo(path);
+    localStorage.setItem('logo', JSON.stringify(path));
   };
 
   const updateInvoice = (newInvoice: InvoiceType) => {
@@ -29,9 +36,14 @@ export default function App() {
   // Load company info from localStorage on startup
   useEffect(() => {
     const info = localStorage.getItem('companyInfo');
+    const logoFromLocalStorage = localStorage.getItem('logo');
     if (info) {
       const parsed: CompanyInfoType = JSON.parse(info);
       setcompanyInfo(parsed);
+    }
+    if (logoFromLocalStorage) {
+      const parsed: string = JSON.parse(logoFromLocalStorage);
+      setlogo(parsed);
     }
   }, []);
 
@@ -43,7 +55,11 @@ export default function App() {
         <Route
           path="/company-info"
           element={
-            <CompanyInfo update={updateCompanyInfo} company={companyInfo} />
+            <CompanyInfo
+              update={updateCompanyInfo}
+              company={companyInfo}
+              updateLogo={updateLogo}
+            />
           }
         />
         <Route
@@ -52,7 +68,13 @@ export default function App() {
         />
         <Route
           path="/invoice-viewer"
-          element={<InvoiceViewer company={companyInfo} invoice={invoice} />}
+          element={
+            <InvoiceViewer
+              company={companyInfo}
+              invoice={invoice}
+              logo={logo}
+            />
+          }
         />
       </Routes>
     </Router>

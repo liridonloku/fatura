@@ -13,6 +13,10 @@ type Props = {
    * Invoice data: Buyer info, dates and delivery address, and items
    */
   invoice: InvoiceType | null;
+  /**
+   * Path to the logo
+   */
+  logo: string;
 };
 
 /**
@@ -21,6 +25,7 @@ type Props = {
 const InvoiceViewer: React.FC<Props> = ({
   company = { name: 'Company', id: 'id' },
   invoice,
+  logo,
 }) => {
   const navigate = useNavigate();
 
@@ -81,7 +86,20 @@ const InvoiceViewer: React.FC<Props> = ({
     <StyledInvoiceViewer>
       <div className="logo-container">
         <div className="logo">
-          <h1>Logo</h1>
+          {logo ? (
+            <img
+              src={logo}
+              alt=""
+              onError={(e) => {
+                if (e.currentTarget.src !== 'image_path_here') {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = 'image_path_here';
+                }
+              }}
+            />
+          ) : (
+            <h1>Logo</h1>
+          )}
         </div>
         <div className="invoice-no">
           <h2>

@@ -91,6 +91,23 @@ ipcMain.handle('print', async () => {
   });
 });
 
+ipcMain.handle('upload-logo', async (_event, args) => {
+  if (args.length === 0) return Error('No image found');
+  const filePath = args[0];
+  const extension = args[1];
+  const userDataPath = app.getPath('userData');
+  try {
+    const file = fs.readFileSync(filePath);
+    const folder = path.join(userDataPath, '/fatura');
+    if (!fs.existsSync(folder)) fs.mkdirSync(folder);
+    const savePath = path.join(userDataPath, `/fatura/logo.${extension}`);
+    fs.writeFileSync(savePath, file);
+    return savePath;
+  } catch (error) {
+    return error;
+  }
+});
+
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();

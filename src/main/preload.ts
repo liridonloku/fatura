@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example' | 'save-to-pdf' | 'print';
+export type Channels = 'ipc-example' | 'save-to-pdf' | 'print' | 'upload-logo';
 
 contextBridge.exposeInMainWorld('electron', {
   ipcRenderer: {

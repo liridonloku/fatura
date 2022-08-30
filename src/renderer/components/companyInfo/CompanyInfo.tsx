@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { CompanyInfoType } from './companyInfo.types';
@@ -13,14 +13,21 @@ type Props = {
    * Company information to display
    */
   company: CompanyInfoType;
+  /**
+   * Updates app state containing the logo
+   */
+  updateLogo: (path: string) => void;
 };
 
 /**
  * CompanyInfo is the component where the user can see and update information
  * about the company
  */
-const CompanyInfo: React.FC<Props> = ({ company, update }) => {
+const CompanyInfo: React.FC<Props> = ({ company, update, updateLogo }) => {
   const navigate = useNavigate();
+
+  const [localLogo, setLocalLogo] = useState<null | File>(null);
+  const [logosrc, setlogosrc] = useState('');
 
   // Build form
   const {
@@ -55,6 +62,42 @@ const CompanyInfo: React.FC<Props> = ({ company, update }) => {
   // Update company info on submit
   const onSubmit: SubmitHandler<CompanyInfoType> = (data) => update(data);
 
+  // Set logo to display and prepare for upload
+  const onImageInput = (e: React.FormEvent<HTMLInputElement>) => {
+    const file = e.currentTarget.files ? e.currentTarget.files[0] : null;
+    if (file) {
+      const reader = new FileReader();
+      setLocalLogo(file);
+      reader.onload = (event) => {
+        if (typeof event.target?.result === 'string') {
+          setlogosrc(event.target.result);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const uploadLogo = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    // Get uploaded image extension
+    const extension = localLogo?.type.slice(
+      localLogo.type.lastIndexOf('/') + 1
+    );
+    try {
+      const logoPath = await window.electron.ipcRenderer.invoke('upload-logo', [
+        localLogo?.path,
+        extension,
+      ]);
+      updateLogo(logoPath);
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(err);
+    }
+    // Remove focus from button
+    if (e.currentTarget) e.currentTarget.blur();
+  };
+
   return (
     <>
       <div className="container text-center">
@@ -67,7 +110,7 @@ const CompanyInfo: React.FC<Props> = ({ company, update }) => {
           Home
         </button>
       </div>
-      <div className="container">
+      <div className="container mb-3">
         <form onSubmit={handleSubmit(onSubmit)}>
           <input
             type="text"
@@ -145,6 +188,34 @@ const CompanyInfo: React.FC<Props> = ({ company, update }) => {
             </button>
           </div>
         </form>
+      </div>
+      <div className="container mb-3">
+        <h2>Logo</h2>
+      </div>
+      <div
+        className="container d-flex gap-2 mb-4"
+        style={{ minHeight: '200px' }}
+      >
+        <div className="flex-grow-1">
+          <input
+            type="file"
+            accept="image/*"
+            name="logo"
+            id="logo"
+            className="form-control mb-3"
+            onChange={(e) => onImageInput(e)}
+          />
+          <button
+            type="button"
+            className="btn btn-outline-primary w-100"
+            onClick={(e) => uploadLogo(e)}
+          >
+            Upload Logo
+          </button>
+        </div>
+        <div className="card w-50">
+          <img src={logosrc} alt="" className="card-img-top h-100" />
+        </div>
       </div>
     </>
   );
