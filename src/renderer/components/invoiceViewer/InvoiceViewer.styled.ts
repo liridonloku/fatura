@@ -4,6 +4,8 @@ import styled from 'styled-components';
  * Styles for Invoice Viewer - Styled Components
  */
 const StyledInvoiceViewer = styled.div`
+  --space-between-sections: 60px;
+
   padding: 16px;
   min-height: 150vw;
   max-width: 1200px;
@@ -15,7 +17,7 @@ const StyledInvoiceViewer = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 48px;
+    margin-bottom: var(--space-between-sections);
 
     .logo {
       height: 100px;
@@ -47,7 +49,8 @@ const StyledInvoiceViewer = styled.div`
   .seller-buyer-delivery {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 48px;
+    margin-bottom: var(--space-between-sections);
+    padding: 0 15px;
 
     div {
       min-width: 100px;
@@ -126,6 +129,7 @@ const StyledInvoiceViewer = styled.div`
     justify-content: flex-end;
     padding: 16px 0;
     flex-grow: 1;
+    margin-bottom: var(--space-between-sections);
 
     div {
       p {
@@ -177,6 +181,7 @@ const StyledInvoiceViewer = styled.div`
 
   @media print {
     width: 1100px;
+    min-height: 1540px;
   }
 `;
 

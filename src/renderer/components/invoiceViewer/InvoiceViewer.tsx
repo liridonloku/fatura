@@ -173,8 +173,9 @@ const InvoiceViewer: React.FC<Props> = ({
       </div>
       <div className="footer">
         <p className="fw-bold">Bank accounts:</p>
-        {company.bankAccounts?.map((account) => (
-          <p className="mb-0">
+        {company.bankAccounts?.map((account, index) => (
+          // eslint-disable-next-line react/no-array-index-key
+          <p className="mb-0" key={index}>
             {account.bank}: {account.accountNumber}
           </p>
         ))}
