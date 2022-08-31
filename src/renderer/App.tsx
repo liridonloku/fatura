@@ -59,6 +59,7 @@ export default function App() {
               update={updateCompanyInfo}
               company={companyInfo}
               updateLogo={updateLogo}
+              logo={logo}
             />
           }
         />

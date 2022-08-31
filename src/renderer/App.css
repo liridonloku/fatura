@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+.cSpan {
+  min-width: 120px;
+}
+
 /* Remove arrows on input[number] */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

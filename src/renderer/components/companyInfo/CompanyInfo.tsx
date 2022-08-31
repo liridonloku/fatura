@@ -17,13 +17,22 @@ type Props = {
    * Updates app state containing the logo
    */
   updateLogo: (path: string) => void;
+  /**
+   * The company logo
+   */
+  logo: string;
 };
 
 /**
  * CompanyInfo is the component where the user can see and update information
  * about the company
  */
-const CompanyInfo: React.FC<Props> = ({ company, update, updateLogo }) => {
+const CompanyInfo: React.FC<Props> = ({
+  company,
+  update,
+  updateLogo,
+  logo,
+}) => {
   const navigate = useNavigate();
 
   const [localLogo, setLocalLogo] = useState<null | File>(null);
@@ -80,22 +89,26 @@ const CompanyInfo: React.FC<Props> = ({ company, update, updateLogo }) => {
   const uploadLogo = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
+    // Exit if no new logo is chosen
+    if (!localLogo) return;
+
     // Get uploaded image extension
     const extension = localLogo?.type.slice(
       localLogo.type.lastIndexOf('/') + 1
     );
+
     try {
       const logoPath = await window.electron.ipcRenderer.invoke('upload-logo', [
         localLogo?.path,
         extension,
       ]);
-      // Use custom protocol 'atom' for security reasons
-      const atomPath = `atom:///${logoPath}`;
+      const atomPath = `atom:///${logoPath}`; // Use custom protocol 'atom' to be able to access local files
       updateLogo(atomPath);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log(err);
     }
+
     // Remove focus from button
     if (e.currentTarget) e.currentTarget.blur();
   };
@@ -112,44 +125,61 @@ const CompanyInfo: React.FC<Props> = ({ company, update, updateLogo }) => {
           Home
         </button>
       </div>
-      <div className="container mb-3">
+      <div className="container mb-5">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <input
-            type="text"
-            {...register('name')}
-            name="name"
-            id="name"
-            className="form-control mb-2"
-            placeholder="Company Name"
-            defaultValue={company.name}
-          />
-          <input
-            type="text"
-            {...register('id')}
-            name="id"
-            id="id"
-            className="form-control mb-2"
-            placeholder="Company Id"
-            defaultValue={company.id}
-          />
-          <input
-            type="text"
-            {...register('address')}
-            name="address"
-            id="address"
-            className="form-control mb-2"
-            placeholder="Company address"
-            defaultValue={company.address}
-          />
-          <input
-            type="tel"
-            {...register('phone')}
-            name="phone"
-            id="phone"
-            className="form-control mb-2"
-            placeholder="Company phone no"
-            defaultValue={company.phone}
-          />
+          <div className="input-group mb-3">
+            <span className="input-group-text cSpan">Name</span>
+            <input
+              type="text"
+              {...register('name')}
+              name="name"
+              id="name"
+              className="form-control"
+              placeholder="Company Name"
+              defaultValue={company.name}
+              required
+            />
+          </div>
+          <div className="input-group mb-3">
+            <span className="input-group-text cSpan">Id</span>
+            <input
+              type="text"
+              {...register('id')}
+              name="id"
+              id="id"
+              className="form-control"
+              placeholder="Company Id"
+              defaultValue={company.id}
+              required
+            />
+          </div>
+          <div className="input-group mb-3">
+            <span className="input-group-text cSpan">Address</span>
+            <input
+              type="text"
+              {...register('address')}
+              name="address"
+              id="address"
+              className="form-control"
+              placeholder="Company address"
+              defaultValue={company.address}
+            />
+          </div>
+          <div className="input-group mb-3">
+            <span className="input-group-text cSpan">Phone</span>
+            <input
+              type="tel"
+              {...register('phone')}
+              name="phone"
+              id="phone"
+              className="form-control"
+              placeholder="Company phone no"
+              defaultValue={company.phone}
+            />
+          </div>
+          <div className="text-center mb-3">
+            <h2>Bank Accounts</h2>
+          </div>
           {fields.map((item, i) => (
             <div className="input-group mb-3" key={item.id}>
               <span className="input-group-text">Bank name</span>
@@ -191,14 +221,14 @@ const CompanyInfo: React.FC<Props> = ({ company, update, updateLogo }) => {
           </div>
         </form>
       </div>
-      <div className="container mb-3">
+      <div className="container mb-3 text-center">
         <h2>Logo</h2>
       </div>
       <div
         className="container d-flex gap-2 mb-4"
         style={{ minHeight: '200px' }}
       >
-        <div className="flex-grow-1">
+        <div className="flex-grow-1 d-flex flex-column justify-content-center">
           <input
             type="file"
             accept="image/*"
@@ -212,11 +242,11 @@ const CompanyInfo: React.FC<Props> = ({ company, update, updateLogo }) => {
             className="btn btn-outline-primary w-100"
             onClick={(e) => uploadLogo(e)}
           >
-            Upload Logo
+            Update Logo
           </button>
         </div>
         <div className="card w-50">
-          <img src={logosrc} alt="" className="card-img-top h-100" />
+          <img src={logosrc || logo} alt="" className="card-img-top h-100" />
         </div>
       </div>
     </>
