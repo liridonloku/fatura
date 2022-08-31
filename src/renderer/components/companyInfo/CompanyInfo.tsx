@@ -89,7 +89,9 @@ const CompanyInfo: React.FC<Props> = ({ company, update, updateLogo }) => {
         localLogo?.path,
         extension,
       ]);
-      updateLogo(logoPath);
+      // Use custom protocol 'atom' for security reasons
+      const atomPath = `atom:///${logoPath}`;
+      updateLogo(atomPath);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log(err);

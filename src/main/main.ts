@@ -10,7 +10,7 @@
  */
 import path from 'path';
 import fs from 'fs';
-import { app, BrowserWindow, shell, ipcMain, dialog } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, dialog, protocol } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -209,6 +209,12 @@ app
       // On macOS it's common to re-create a window in the app when the
       // dock icon is clicked and there are no other windows open.
       if (mainWindow === null) createWindow();
+    });
+    // Use custom protocol to display local file
+    protocol.registerFileProtocol('atom', (request, callback) => {
+      const url = request.url.substr(7);
+      // eslint-disable-next-line promise/no-callback-in-promise
+      callback(decodeURI(path.normalize(url)));
     });
   })
   .catch(console.log);
