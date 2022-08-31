@@ -11,37 +11,27 @@
 import path from 'path';
 import fs from 'fs';
 import { app, BrowserWindow, shell, ipcMain, dialog, protocol } from 'electron';
-import { autoUpdater } from 'electron-updater';
-import log from 'electron-log';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
 
-class AppUpdater {
-  constructor() {
-    log.transports.file.level = 'info';
-    autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
-  }
-}
-
 let mainWindow: BrowserWindow | null = null;
 
-ipcMain.on('ipc-example', async (event, arg) => {
-  const msgTemplate = (pingPong: string) => `IPC test: ${pingPong}`;
-  console.log(msgTemplate(arg));
-  event.reply('ipc-example', msgTemplate('pong'));
-});
-
 ipcMain.handle('save-to-pdf', async (_event, args) => {
+  //  Set default save path to documents/{invoiceNo}.pdf
   const defaultPath = path.join(
-    __dirname,
-    `../../assets/${args[0].invoiceNo}.pdf`
+    app.getPath('documents'),
+    `/${args[0].invoiceNo}.pdf`
   );
+
+  //  Get focused window
   const win = BrowserWindow.getFocusedWindow();
   if (win) {
+    //  Get final save path via system dialog
     const savePath = dialog.showSaveDialogSync(win, {
       defaultPath,
     });
+
+    //  Start printing
     win.webContents
       .printToPDF({
         marginsType: 2,
@@ -49,15 +39,16 @@ ipcMain.handle('save-to-pdf', async (_event, args) => {
       })
       .then((data) => {
         if (savePath) {
+          //  User has saved the file
           fs.writeFile(savePath, data, (err) => {
             if (err) {
               console.log(err);
               return err;
             }
-            console.log('PDF Generated Successfully');
             return 'File successfully saved';
           });
         }
+        //  User has canceled saving
         return 'Save canceled';
       })
       .catch((error) => {
@@ -68,7 +59,11 @@ ipcMain.handle('save-to-pdf', async (_event, args) => {
   return 'File not saved';
 });
 
-// Will not work if device doesn't have a default printer, using window.print() instead
+/**
+ *  Will not work if device doesn't have a default printer, we'll be using
+ *  window.print() from the renderer instead. Keeping this function in case
+ *  a solution is found
+ */
 ipcMain.handle('print', async () => {
   const win = BrowserWindow.getFocusedWindow();
   const options = {
@@ -93,15 +88,25 @@ ipcMain.handle('print', async () => {
 
 ipcMain.handle('upload-logo', async (_event, args) => {
   if (args.length === 0) return Error('No image found');
+
+  //  Get uploaded logo path and extension
   const filePath = args[0];
   const extension = args[1];
+
+  //  Get system specific folder for user data
   const userDataPath = app.getPath('userData');
+
   try {
     const file = fs.readFileSync(filePath);
+
+    //  Create save folder if it doesn't exist
     const folder = path.join(userDataPath, '/fatura');
     if (!fs.existsSync(folder)) fs.mkdirSync(folder);
+
+    //  Save logo at userData/Electron/fatura/logo.jpg (or other image extension)
     const savePath = path.join(userDataPath, `/fatura/logo.${extension}`);
     fs.writeFileSync(savePath, file);
+
     return savePath;
   } catch (error) {
     return error;
@@ -183,10 +188,6 @@ const createWindow = async () => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
   });
-
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
-  new AppUpdater();
 };
 
 /**
