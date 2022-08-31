@@ -52,7 +52,11 @@ const InvoiceViewer: React.FC<Props> = ({
     ));
   };
 
-  // Calculates the sum of all invoice items
+  /**
+   * Calculates the total cost of all invoice items
+   * @param items - Items from the invoice
+   * @returns the total cost of all items in fixed-point notation
+   */
   const calculateTotal = (items: InvoiceType['items']) => {
     return items
       .reduce((acc, current) => {
@@ -61,6 +65,11 @@ const InvoiceViewer: React.FC<Props> = ({
       .toFixed(2);
   };
 
+  /**
+   * Calculates the cost of all invoice items without tax
+   * @param items - Items from the invoice
+   * @returns the total cost without tax of all items in fixed-point notation
+   */
   const calculateTotalWithoutTax = (items: InvoiceType['items']) => {
     return items
       .reduce((acc, current) => {
@@ -69,12 +78,18 @@ const InvoiceViewer: React.FC<Props> = ({
       .toFixed(2);
   };
 
+  /**
+   * Save invoice as PDF using the system dialog
+   */
   const saveToPDF = async () => {
     setloading(true);
     await window.electron.ipcRenderer.invoke('save-to-pdf', [invoice]);
     setloading(false);
   };
 
+  /**
+   * Print the invoice
+   */
   const printInvoice = async () => {
     setloading(true);
     window.print();

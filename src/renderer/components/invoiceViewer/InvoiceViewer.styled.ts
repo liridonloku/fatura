@@ -18,10 +18,11 @@ const StyledInvoiceViewer = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: var(--space-between-sections);
+    flex-grow: 1;
 
     .logo {
-      height: 100px;
-      width: 15%;
+      max-height: 200px;
+      width: 30%;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -128,7 +129,7 @@ const StyledInvoiceViewer = styled.div`
     display: flex;
     justify-content: flex-end;
     padding: 16px 0;
-    flex-grow: 1;
+    flex-grow: 2;
     margin-bottom: var(--space-between-sections);
 
     div {
