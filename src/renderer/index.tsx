@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import 'bootstrap';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 

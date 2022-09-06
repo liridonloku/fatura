@@ -70,8 +70,8 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
   };
 
   return (
-    <>
-      <div className="container-xl text-center mb-3">
+    <div className="container-xl">
+      <div className="text-center mb-3">
         <h1>New Invoice</h1>
         <button
           className="btn btn-primary"
@@ -81,7 +81,7 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
           Home
         </button>
       </div>
-      <div className="container-xl">
+      <div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           onKeyDown={(e) =>
@@ -108,7 +108,7 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

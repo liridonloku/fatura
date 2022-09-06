@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import CompanyInfo from './components/companyInfo/CompanyInfo';
-import Header from './components/Header';
 import Home from './components/Home';
 import { CompanyInfoType } from './components/companyInfo/companyInfo.types';
 import InvoiceCreator from './components/invoiceCreator/InvoiceCreator';
 import InvoiceViewer from './components/invoiceViewer/InvoiceViewer';
 import { InvoiceType } from './components/invoiceCreator/invoice.types';
+import SideBar from './components/SideBar';
 
 export default function App() {
   const [companyInfo, setcompanyInfo] = useState<CompanyInfoType>({
@@ -49,35 +49,41 @@ export default function App() {
 
   return (
     <Router>
-      <Header company={companyInfo} />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route
-          path="/company-info"
-          element={
-            <CompanyInfo
-              update={updateCompanyInfo}
-              company={companyInfo}
-              updateLogo={updateLogo}
-              logo={logo}
+      <div className="container-fluid p-0 m-0 d-flex min-vh-100">
+        <div className="container-fluid col-sm-3 col-lg-2 p-0 m-0">
+          <SideBar company={companyInfo} logo={logo} />
+        </div>
+        <div className="container-fluid col-sm-9 col-lg-10 p-0 m-0">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/company-info"
+              element={
+                <CompanyInfo
+                  update={updateCompanyInfo}
+                  company={companyInfo}
+                  updateLogo={updateLogo}
+                  logo={logo}
+                />
+              }
             />
-          }
-        />
-        <Route
-          path="/new-invoice"
-          element={<InvoiceCreator updateInvoice={updateInvoice} />}
-        />
-        <Route
-          path="/invoice-viewer"
-          element={
-            <InvoiceViewer
-              company={companyInfo}
-              invoice={invoice}
-              logo={logo}
+            <Route
+              path="/new-invoice"
+              element={<InvoiceCreator updateInvoice={updateInvoice} />}
             />
-          }
-        />
-      </Routes>
+            <Route
+              path="/invoice-viewer"
+              element={
+                <InvoiceViewer
+                  company={companyInfo}
+                  invoice={invoice}
+                  logo={logo}
+                />
+              }
+            />
+          </Routes>
+        </div>
+      </div>
     </Router>
   );
 }
