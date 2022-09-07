@@ -12,7 +12,7 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
   const location = useLocation();
   return (
     <div className="bg-dark text-light h-100">
-      <div className="container-fluid p-0">
+      <div className="container-fluid p-0 sticky-top vh-100 overflow-auto">
         <div className="mb-5">
           <img src={logo} alt="" className="img-fluid" />
           <h1 className="fs-4 text-center">{company.name}</h1>
@@ -28,7 +28,7 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
               navigate('/');
             }}
           >
-            Dashboard
+            Home
           </button>
           <button
             type="button"
@@ -43,6 +43,18 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
             }}
           >
             Company
+          </button>
+          <button
+            type="button"
+            className={`btn ${
+              location.pathname === '/settings' ? 'btn-secondary' : 'btn-dark'
+            } rounded-0 w-100 py-2`}
+            onClick={(e) => {
+              e.currentTarget.blur();
+              navigate('/settings', { replace: false });
+            }}
+          >
+            Settings
           </button>
         </div>
       </div>
