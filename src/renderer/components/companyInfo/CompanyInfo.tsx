@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { CompanyInfoType } from './companyInfo.types';
+import generateLogoName from '../../utils/generateInvoiceNo';
 
 type Props = {
   /**
@@ -18,7 +19,7 @@ type Props = {
    */
   updateLogo: (path: string) => void;
   /**
-   * The company logo
+   * The company logo source
    */
   logo: string;
 };
@@ -97,10 +98,20 @@ const CompanyInfo: React.FC<Props> = ({
       localLogo.type.lastIndexOf('/') + 1
     );
 
+    /**
+     * Each time a logo is uploaded, it gets assigned a different name and the
+     * old logo gets deleted. The previous solution was to save the file with the
+     * same name so it would get overwritten, but it caused problems because of
+     * browser cache not reloading the image thinking it hasn't changed.
+     */
+    const newLogoName = generateLogoName();
+
     try {
       const logoPath = await window.electron.ipcRenderer.invoke('upload-logo', [
         localLogo?.path,
         extension,
+        newLogoName,
+        logo,
       ]);
       const atomPath = `atom:///${logoPath}`; // Use custom protocol 'atom' to be able to access local files
       updateLogo(atomPath);

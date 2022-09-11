@@ -92,9 +92,17 @@ ipcMain.handle('upload-logo', async (_event, args) => {
   //  Get uploaded logo path and extension
   const filePath = args[0];
   const extension = args[1];
+  const newLogoName = args[2];
+  const oldLogo = args[3].slice(8);
+  console.log(newLogoName, oldLogo);
 
   //  Get system specific folder for user data
   const userDataPath = app.getPath('userData');
+
+  //  Delete old logo
+  if (oldLogo) {
+    fs.rmSync(oldLogo);
+  }
 
   try {
     const file = fs.readFileSync(filePath);
@@ -103,8 +111,11 @@ ipcMain.handle('upload-logo', async (_event, args) => {
     const folder = path.join(userDataPath, '/fatura');
     if (!fs.existsSync(folder)) fs.mkdirSync(folder);
 
-    //  Save logo at userData/Electron/fatura/logo.jpg (or other image extension)
-    const savePath = path.join(userDataPath, `/fatura/logo.${extension}`);
+    //  Save logo at userData/Electron/fatura/newLogoName
+    const savePath = path.join(
+      userDataPath,
+      `/fatura/${newLogoName}.${extension}`
+    );
     fs.writeFileSync(savePath, file);
 
     return savePath;
