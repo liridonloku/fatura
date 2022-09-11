@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import './App.css';
 import CompanyInfo from './components/companyInfo/CompanyInfo';
 import Home from './components/Home';
@@ -8,16 +9,17 @@ import InvoiceCreator from './components/invoiceCreator/InvoiceCreator';
 import InvoiceViewer from './components/invoiceViewer/InvoiceViewer';
 import { InvoiceType } from './components/invoiceCreator/invoice.types';
 import SideBar from './components/SideBar';
+import Settings from './components/Settings';
 
 export default function App() {
   const [companyInfo, setcompanyInfo] = useState<CompanyInfoType>({
     name: 'Company',
     id: '600000000',
   });
-
   const [logo, setlogo] = useState('');
-
   const [invoice, setinvoice] = useState<InvoiceType | null>(null);
+
+  const { i18n } = useTranslation();
 
   const updateCompanyInfo = (info: CompanyInfoType) => {
     setcompanyInfo(info);
@@ -33,7 +35,7 @@ export default function App() {
     setinvoice(newInvoice);
   };
 
-  // Load company info from localStorage on startup
+  // Load information from localStorage on startup
   useEffect(() => {
     const info = localStorage.getItem('companyInfo');
     const logoFromLocalStorage = localStorage.getItem('logo');
@@ -45,6 +47,9 @@ export default function App() {
       const parsed: string = JSON.parse(logoFromLocalStorage);
       setlogo(parsed);
     }
+    const language = localStorage.getItem('language');
+    if (language) i18n.changeLanguage(language);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -81,6 +86,7 @@ export default function App() {
                 />
               }
             />
+            <Route path="/settings" element={<Settings />} />
           </Routes>
         </div>
       </div>
