@@ -18,6 +18,7 @@ export default function App() {
   });
   const [logo, setlogo] = useState('');
   const [invoice, setinvoice] = useState<InvoiceType | null>(null);
+  const [currency, setCurrency] = useState('€');
 
   const { i18n } = useTranslation();
 
@@ -47,8 +48,12 @@ export default function App() {
       const parsed: string = JSON.parse(logoFromLocalStorage);
       setlogo(parsed);
     }
+
     const language = localStorage.getItem('language');
     if (language) i18n.changeLanguage(language);
+
+    const curr = localStorage.getItem('currency');
+    if (curr) setCurrency(curr);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -86,7 +91,12 @@ export default function App() {
                 />
               }
             />
-            <Route path="/settings" element={<Settings />} />
+            <Route
+              path="/settings"
+              element={
+                <Settings currency={currency} setCurrency={setCurrency} />
+              }
+            />
           </Routes>
         </div>
       </div>

@@ -43,5 +43,6 @@
   "delivery": "Delivery",
   "bill-to": "Bill to",
   "save-as-pdf": "Save as PDF",
-  "language": "Language"
+  "language": "Language",
+  "currency": "Currency"
 }

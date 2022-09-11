@@ -43,5 +43,6 @@
   "delivery": "Dergesa",
   "bill-to": "Bleresi",
   "save-as-pdf": "Ruaj si PDF",
-  "language": "Gjuha"
+  "language": "Gjuha",
+  "currency": "Valuta"
 }
