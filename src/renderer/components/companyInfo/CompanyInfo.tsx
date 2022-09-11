@@ -1,8 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { CompanyInfoType } from './companyInfo.types';
+
+//  Use generateInvoiceNo to generate unique file names
 import generateLogoName from '../../utils/generateInvoiceNo';
 
 type Props = {
@@ -35,6 +38,7 @@ const CompanyInfo: React.FC<Props> = ({
   logo,
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [localLogo, setLocalLogo] = useState<null | File>(null);
   const [logosrc, setlogosrc] = useState('');
@@ -111,7 +115,7 @@ const CompanyInfo: React.FC<Props> = ({
         localLogo?.path,
         extension,
         newLogoName,
-        logo,
+        logo, // Old logo gets deleted
       ]);
       const atomPath = `atom:///${logoPath}`; // Use custom protocol 'atom' to be able to access local files
       updateLogo(atomPath);
@@ -127,19 +131,19 @@ const CompanyInfo: React.FC<Props> = ({
   return (
     <>
       <div className="container text-center">
-        <h1>Company Info</h1>
+        <h1>{t('company-info')}</h1>
         <button
           className="btn btn-primary mb-3"
           type="button"
           onClick={() => navigate('/')}
         >
-          Home
+          {t('home')}
         </button>
       </div>
       <div className="container mb-5">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="input-group mb-3">
-            <span className="input-group-text cSpan">Name</span>
+            <span className="input-group-text cSpan">{t('name')}</span>
             <input
               type="text"
               {...register('name')}
@@ -152,7 +156,7 @@ const CompanyInfo: React.FC<Props> = ({
             />
           </div>
           <div className="input-group mb-3">
-            <span className="input-group-text cSpan">Id</span>
+            <span className="input-group-text cSpan">{t('id')}</span>
             <input
               type="text"
               {...register('id')}
@@ -165,7 +169,7 @@ const CompanyInfo: React.FC<Props> = ({
             />
           </div>
           <div className="input-group mb-3">
-            <span className="input-group-text cSpan">Address</span>
+            <span className="input-group-text cSpan">{t('address')}</span>
             <input
               type="text"
               {...register('address')}
@@ -177,7 +181,7 @@ const CompanyInfo: React.FC<Props> = ({
             />
           </div>
           <div className="input-group mb-3">
-            <span className="input-group-text cSpan">Phone</span>
+            <span className="input-group-text cSpan">{t('phone')}</span>
             <input
               type="tel"
               {...register('phone')}
@@ -189,11 +193,11 @@ const CompanyInfo: React.FC<Props> = ({
             />
           </div>
           <div className="text-center mb-3">
-            <h2>Bank Accounts</h2>
+            <h2>{t('bank-accounts')}</h2>
           </div>
           {fields.map((item, i) => (
             <div className="input-group mb-3" key={item.id}>
-              <span className="input-group-text">Bank name</span>
+              <span className="input-group-text">{t('bank-name')}</span>
               <input
                 type="text"
                 {...register(`bankAccounts.${i}.bank`)}
@@ -201,7 +205,7 @@ const CompanyInfo: React.FC<Props> = ({
                 defaultValue={item.bank}
                 placeholder="Bank name"
               />
-              <span className="input-group-text">Account no</span>
+              <span className="input-group-text">{t('account-no')}</span>
               <input
                 type="text"
                 {...register(`bankAccounts.${i}.accountNumber`)}
@@ -214,7 +218,7 @@ const CompanyInfo: React.FC<Props> = ({
                 className="btn btn-danger"
                 onClick={() => remove(i)}
               >
-                Remove
+                {t('remove')}
               </button>
             </div>
           ))}
@@ -224,16 +228,16 @@ const CompanyInfo: React.FC<Props> = ({
               onClick={() => append({ bank: '', accountNumber: '' })}
               className="btn btn-outline-primary me-2"
             >
-              Add Bank Account
+              {t('add-bank-account')}
             </button>
             <button type="submit" className="btn btn-success">
-              Update Info
+              {t('update-info')}
             </button>
           </div>
         </form>
       </div>
       <div className="container mb-3 text-center">
-        <h2>Logo</h2>
+        <h2>{t('logo')}</h2>
       </div>
       <div
         className="container d-flex gap-2 mb-4"
@@ -253,7 +257,7 @@ const CompanyInfo: React.FC<Props> = ({
             className="btn btn-outline-primary w-100"
             onClick={(e) => uploadLogo(e)}
           >
-            Update Logo
+            {t('update-logo')}
           </button>
         </div>
         <div className="card w-50">

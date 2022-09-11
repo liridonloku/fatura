@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CompanyInfoType } from './companyInfo/companyInfo.types';
 
@@ -10,6 +11,7 @@ type Props = {
 const SideBar: React.FC<Props> = ({ company, logo }) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useTranslation();
   return (
     <div className="bg-dark text-light h-100">
       <div className="container-fluid p-0 sticky-top vh-100 overflow-auto">
@@ -28,7 +30,7 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
               navigate('/');
             }}
           >
-            Home
+            {t('home')}
           </button>
           <button
             type="button"
@@ -42,7 +44,7 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
               navigate('/company-info', { replace: false });
             }}
           >
-            Company
+            {t('company')}
           </button>
           <button
             type="button"
@@ -54,7 +56,7 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
               navigate('/settings', { replace: false });
             }}
           >
-            Settings
+            {t('settings')}
           </button>
         </div>
       </div>

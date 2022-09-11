@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { CompanyInfoType } from '../companyInfo/companyInfo.types';
 import { InvoiceType } from '../invoiceCreator/invoice.types';
@@ -28,6 +29,7 @@ const InvoiceViewer: React.FC<Props> = ({
   logo,
 }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const [loading, setloading] = useState(false);
 
@@ -101,22 +103,22 @@ const InvoiceViewer: React.FC<Props> = ({
     <StyledInvoiceViewer>
       <div className="logo-container">
         <div className="logo">
-          {logo ? <img src={logo} alt="" /> : <h1>Logo</h1>}
+          {logo ? <img src={logo} alt="" /> : <h1>{t('logo')}</h1>}
         </div>
         <div className="invoice-no">
           <h2>
-            <span>Invoice: </span>
+            <span>{t('invoice')}: </span>
             {invoice?.invoiceNo}
           </h2>
           <h3>
-            <span>Date: </span>
+            <span>{t('date')}: </span>
             {invoice?.invoiceDate.toLocaleDateString('tr')}
           </h3>
         </div>
       </div>
       <div className="seller-buyer-delivery">
         <div>
-          <p className="mb-0 fw-bold">Seller:</p>
+          <p className="mb-0 fw-bold">{t('seller')}:</p>
           <p className="mb-0">{company.name}</p>
           <p className="mb-0">{company.id}</p>
           <p className="mb-0">{company.address}</p>
@@ -125,15 +127,18 @@ const InvoiceViewer: React.FC<Props> = ({
         {(invoice?.delivery?.deliveryAddress ||
           invoice?.delivery?.deliveryDate) && (
           <div>
-            <p className="mb-0 fw-bold">Delivery</p>
+            <p className="mb-0 fw-bold">{t('delivery')}</p>
             <p className="mb-0">
-              Date: {invoice.delivery.deliveryDate.toLocaleDateString('tr')}
+              {t('date')}:
+              {invoice.delivery.deliveryDate.toLocaleDateString('tr')}
             </p>
-            <p className="mb-0">Address: {invoice.delivery.deliveryAddress}</p>
+            <p className="mb-0">
+              {t('address')}: {invoice.delivery.deliveryAddress}
+            </p>
           </div>
         )}
         <div className="buyer">
-          <p className="mb-0 fw-bold">Bill to:</p>
+          <p className="mb-0 fw-bold">{t('bill-to')}:</p>
           <p className="mb-0">{invoice?.buyer.name}</p>
           <p className="mb-0">{invoice?.buyer.id}</p>
           <p className="mb-0">{invoice?.buyer.address}</p>
@@ -142,14 +147,14 @@ const InvoiceViewer: React.FC<Props> = ({
       </div>
       <div className="items">
         <div className="items-header">
-          <div className="no">#</div>
-          <div className="description">Description</div>
-          <div className="units">Units</div>
-          <div className="qty">Qty.</div>
-          <div className="price">Price</div>
-          <div className="tax">Tax %</div>
-          <div className="price-w-tax">Price with tax</div>
-          <div className="total">Total</div>
+          <div className="no">{t('no.')}</div>
+          <div className="description">{t('description')}</div>
+          <div className="units">{t('units')}</div>
+          <div className="qty">{t('qty')}</div>
+          <div className="price">{t('price')}</div>
+          <div className="tax">{t('tax-%')}</div>
+          <div className="price-w-tax">{t('price-with-tax')}</div>
+          <div className="total">{t('total')}</div>
         </div>
         <div className="items-body">
           {invoice?.items && renderItems(invoice.items)}
@@ -159,16 +164,16 @@ const InvoiceViewer: React.FC<Props> = ({
         <div className="calculations-container">
           <div className="comment-box">
             <p>
-              <b>Additional information: </b> <br />
+              <b>{t('additional-information')}: </b> <br />
               {invoice.additionalInfo}
             </p>
           </div>
           <div className="labels">
-            <p>Total: </p>
-            <p>Total without tax: </p>
-            <p>Tax: </p>
+            <p>{t('total')}: </p>
+            <p>{t('total-without-tax')}: </p>
+            <p>{t('tax')}: </p>
             <p className="amount-due">
-              <b>Amount Due: </b>
+              <b>{t('ammount-due')}: </b>
             </p>
           </div>
           <div className="calculations">
@@ -188,11 +193,11 @@ const InvoiceViewer: React.FC<Props> = ({
         </div>
       )}
       <div className="signings">
-        <p>Seller</p>
-        <p>Buyer</p>
+        <p>{t('seller')}</p>
+        <p>{t('buyer')}</p>
       </div>
       <div className="footer">
-        <p className="fw-bold">Bank accounts:</p>
+        <p className="fw-bold">{t('bank-accounts')}:</p>
         {company.bankAccounts?.map((account, index) => (
           // eslint-disable-next-line react/no-array-index-key
           <p className="mb-0" key={index}>
@@ -207,7 +212,7 @@ const InvoiceViewer: React.FC<Props> = ({
           onClick={() => saveToPDF()}
           disabled={loading}
         >
-          Save as PDF
+          {t('save-as-pdf')}
         </button>
         <button
           type="button"
@@ -215,7 +220,7 @@ const InvoiceViewer: React.FC<Props> = ({
           onClick={() => printInvoice()}
           disabled={loading}
         >
-          Print
+          {t('print')}
         </button>
         <button
           className="btn btn-secondary"
@@ -223,7 +228,7 @@ const InvoiceViewer: React.FC<Props> = ({
           onClick={() => navigate('/')}
           disabled={loading}
         >
-          Home
+          {t('home')}
         </button>
       </div>
     </StyledInvoiceViewer>
