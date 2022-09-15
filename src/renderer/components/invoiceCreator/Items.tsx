@@ -10,6 +10,7 @@ import {
   UseFormRegister,
   UseFormSetValue,
 } from 'react-hook-form/dist/types/form';
+import { useTranslation } from 'react-i18next';
 import { InvoiceType, ItemType } from './invoice.types';
 
 type Props = {
@@ -36,6 +37,8 @@ const Items: React.FC<Props> = ({
   getValues,
   setValue,
 }) => {
+  const { t } = useTranslation();
+
   const [totals, settotals] = useState({
     total: 0,
     totalWithoutTax: 0,
@@ -90,21 +93,21 @@ const Items: React.FC<Props> = ({
 
   return (
     <fieldset className="border p-3 mb-2 items">
-      <legend className="mb-0">Items</legend>
+      <legend className="mb-0">{t('items')}</legend>
       <div className="container-fluid d-flex justify-content-between align-items-center">
-        <div>No.</div>
+        <div>{t('no.')}</div>
         <div className="row flex-grow-1 mx-0 px-1 text-center align-items-center">
-          <div className="col-sm-5 p-0">Description</div>
-          <div className="col-sm-1 p-0">Units</div>
-          <div className="col-sm-1 p-0">Qty.</div>
-          <div className="col-sm-1 p-0">Price</div>
-          <div className="col-sm-1 p-0">Tax %</div>
-          <div className="col-sm-1 p-0">Price with tax</div>
-          <div className="col-sm-2 p-0">Total</div>
+          <div className="col-sm-5 p-0">{t('description')}</div>
+          <div className="col-sm-1 p-0">{t('units')}</div>
+          <div className="col-sm-1 p-0">{t('qty')}</div>
+          <div className="col-sm-1 p-0">{t('price')}</div>
+          <div className="col-sm-1 p-0">{t('tax-%')}</div>
+          <div className="col-sm-1 p-0">{t('price-with-tax')}</div>
+          <div className="col-sm-2 p-0">{t('total')}</div>
         </div>
         <div className="px-1 text-center d-flex align-items-center">
           <button type="button" className="btn btn-outline-danger invisible">
-            Del
+            {t('del')}
           </button>
         </div>
       </div>
@@ -126,7 +129,7 @@ const Items: React.FC<Props> = ({
                 className="form-control"
                 {...register(`items.${i}.description`)}
                 defaultValue={item.description}
-                placeholder="Description"
+                placeholder={t('description')}
                 required
               />
             </div>
@@ -138,7 +141,7 @@ const Items: React.FC<Props> = ({
                 className="form-control"
                 {...register(`items.${i}.units`)}
                 defaultValue={item.units}
-                placeholder="Units"
+                placeholder={t('units')}
                 required
               />
             </div>
@@ -150,7 +153,7 @@ const Items: React.FC<Props> = ({
                 className="form-control"
                 {...register(`items.${i}.quantity`)}
                 defaultValue={item.quantity}
-                placeholder="Quantity"
+                placeholder="0"
                 onInput={(e) => {
                   updateItemTotal(e, i);
                 }}
@@ -165,7 +168,7 @@ const Items: React.FC<Props> = ({
                 className="form-control"
                 {...register(`items.${i}.price`)}
                 defaultValue={item.price}
-                placeholder="Price"
+                placeholder="0"
                 onInput={(e) => {
                   updateItemTotal(e, i);
                 }}
@@ -213,7 +216,7 @@ const Items: React.FC<Props> = ({
               onClick={() => remove(i)}
               className="btn btn-outline-danger"
             >
-              Del
+              {t('del')}
             </button>
           </div>
         </div>
@@ -234,13 +237,13 @@ const Items: React.FC<Props> = ({
           }
           className="btn btn-outline-primary"
         >
-          Add item
+          {t('add-item')}
         </button>
       </div>
       <div className="container-fluid d-flex flex-column align-items-end">
         <div className="col-sm-4 d-flex align-items-center gap-2 mb-2">
           <label htmlFor="total" className="fs-6 w-75 text-end">
-            Total
+            {t('total')}
           </label>
           <input
             type="text"
@@ -251,13 +254,13 @@ const Items: React.FC<Props> = ({
           />
           <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">
-              Del
+              {t('del')}
             </button>
           </div>
         </div>
         <div className="col-sm-4 d-flex align-items-center gap-2 mb-2">
           <label htmlFor="totalWithoutTax" className="fs-6 w-75 text-end">
-            Total without tax
+            {t('total-without-tax')}
           </label>
           <input
             type="text"
@@ -268,13 +271,13 @@ const Items: React.FC<Props> = ({
           />
           <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">
-              Del
+              {t('del')}
             </button>
           </div>
         </div>
         <div className="col-sm-4 d-flex align-items-center gap-2 mb-2">
           <label htmlFor="total" className="fs-6 w-75 text-end">
-            Tax
+            {t('tax')}
           </label>
           <input
             type="text"
@@ -285,13 +288,13 @@ const Items: React.FC<Props> = ({
           />
           <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">
-              Del
+              {t('del')}
             </button>
           </div>
         </div>
         <div className="col-sm-4 d-flex align-items-center gap-2 mb-2">
           <label htmlFor="total" className="fs-6 fw-bold w-75 text-end">
-            Amount Due
+            {t('ammount-due')}
           </label>
           <input
             type="text"
@@ -302,7 +305,7 @@ const Items: React.FC<Props> = ({
           />
           <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">
-              Del
+              {t('del')}
             </button>
           </div>
         </div>

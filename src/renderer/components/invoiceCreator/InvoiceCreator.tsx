@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import convertInvoiceData from 'renderer/utils/convertInvoceData';
@@ -22,6 +23,7 @@ type Props = {
  */
 const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const buyerInfo: BuyerInfoType[] = ['name', 'id', 'address', 'phone'];
 
@@ -72,13 +74,13 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
   return (
     <div className="container-xl">
       <div className="text-center mb-3">
-        <h1>New Invoice</h1>
+        <h1>{t('new-invoice')}</h1>
         <button
           className="btn btn-primary"
           type="button"
           onClick={() => navigate('/')}
         >
-          Home
+          {t('home')}
         </button>
       </div>
       <div>
@@ -103,7 +105,7 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
           <CommentBox register={register} />
           <div className="text-center mb-5">
             <button type="submit" className="btn btn-success mt-3">
-              Print/Export
+              {`${t('print')}/${t('export')}`}
             </button>
           </div>
         </form>
