@@ -11,6 +11,7 @@ import {
   UseFormSetValue,
 } from 'react-hook-form/dist/types/form';
 import { useTranslation } from 'react-i18next';
+import currencies, { CurrencyTypes } from 'renderer/i18n/currencies/currencies';
 import { InvoiceType, ItemType } from './invoice.types';
 
 type Props = {
@@ -23,6 +24,7 @@ type Props = {
   ) => void;
   getValues: UseFormGetValues<InvoiceType>;
   setValue: UseFormSetValue<InvoiceType>;
+  currency: CurrencyTypes;
 };
 
 /**
@@ -36,6 +38,7 @@ const Items: React.FC<Props> = ({
   append,
   getValues,
   setValue,
+  currency,
 }) => {
   const { t } = useTranslation();
 
@@ -250,7 +253,9 @@ const Items: React.FC<Props> = ({
             readOnly
             id="total"
             className="form-control text-end w-50"
-            value={`${totals.total.toFixed(2)}€`}
+            value={`${totals.total.toFixed(2)}${
+              currencies[`${currency}`].symbol
+            }`}
           />
           <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">
@@ -267,7 +272,9 @@ const Items: React.FC<Props> = ({
             readOnly
             id="totalWithoutTax"
             className="form-control text-end w-50"
-            value={`${totals.totalWithoutTax.toFixed(2)}€`}
+            value={`${totals.totalWithoutTax.toFixed(2)}${
+              currencies[`${currency}`].symbol
+            }`}
           />
           <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">
@@ -284,7 +291,9 @@ const Items: React.FC<Props> = ({
             readOnly
             id="total"
             className="form-control text-end w-50"
-            value={`${totals.tax.toFixed(2)}€`}
+            value={`${totals.tax.toFixed(2)}${
+              currencies[`${currency}`].symbol
+            }`}
           />
           <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">
@@ -301,7 +310,9 @@ const Items: React.FC<Props> = ({
             readOnly
             id="total"
             className="form-control text-end fw-bold w-50"
-            value={`${totals.total.toFixed(2)}€`}
+            value={`${totals.total.toFixed(2)}${
+              currencies[`${currency}`].symbol
+            }`}
           />
           <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">

@@ -165,4 +165,6 @@ const currencies = {
   ZMK: { name: 'Zambian Kwacha', symbol: 'ZK', id: 164 },
 };
 
+export type CurrencyTypes = keyof typeof currencies;
+
 export default currencies;

@@ -10,6 +10,7 @@ import InvoiceViewer from './components/invoiceViewer/InvoiceViewer';
 import { InvoiceType } from './components/invoiceCreator/invoice.types';
 import SideBar from './components/SideBar';
 import Settings from './components/Settings';
+import { CurrencyTypes } from './i18n/currencies/currencies';
 
 export default function App() {
   const [companyInfo, setcompanyInfo] = useState<CompanyInfoType>({
@@ -18,7 +19,7 @@ export default function App() {
   });
   const [logo, setlogo] = useState('');
   const [invoice, setinvoice] = useState<InvoiceType | null>(null);
-  const [currency, setCurrency] = useState('€');
+  const [currency, setCurrency] = useState<CurrencyTypes>('EUR');
 
   const { i18n } = useTranslation();
 
@@ -53,7 +54,9 @@ export default function App() {
     if (language) i18n.changeLanguage(language);
 
     const curr = localStorage.getItem('currency');
-    if (curr) setCurrency(curr);
+    if (curr) {
+      setCurrency(curr as CurrencyTypes);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -79,7 +82,12 @@ export default function App() {
             />
             <Route
               path="/new-invoice"
-              element={<InvoiceCreator updateInvoice={updateInvoice} />}
+              element={
+                <InvoiceCreator
+                  updateInvoice={updateInvoice}
+                  currency={currency}
+                />
+              }
             />
             <Route
               path="/invoice-viewer"

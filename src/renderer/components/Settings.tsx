@@ -1,10 +1,10 @@
 import React, { SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
-import currencies from '../i18n/currencies/currencies';
+import currencies, { CurrencyTypes } from '../i18n/currencies/currencies';
 
 type Props = {
   currency: string;
-  setCurrency: (value: SetStateAction<string>) => void;
+  setCurrency: (value: SetStateAction<CurrencyTypes>) => void;
 };
 
 const Settings: React.FC<Props> = ({ currency, setCurrency }) => {
@@ -53,7 +53,7 @@ const Settings: React.FC<Props> = ({ currency, setCurrency }) => {
           className="form-select"
           defaultValue={currency}
           onChange={(e) => {
-            setCurrency(e.currentTarget.value);
+            setCurrency(e.currentTarget.value as CurrencyTypes);
             localStorage.setItem('currency', e.currentTarget.value);
           }}
         >

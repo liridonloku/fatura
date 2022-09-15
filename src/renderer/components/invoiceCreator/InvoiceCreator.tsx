@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import convertInvoiceData from 'renderer/utils/convertInvoceData';
+import { CurrencyTypes } from 'renderer/i18n/currencies/currencies';
 import { InvoiceType, BuyerInfoType } from './invoice.types';
 import BuyerInfo from './BuyerInfo';
 import InvoiceInfo from './InvoiceInfo';
@@ -16,12 +17,13 @@ type Props = {
    * Updates app state containing invoce data
    */
   updateInvoice: (newInvoice: InvoiceType) => void;
+  currency: CurrencyTypes;
 };
 
 /**
  * The invoice creator component.
  */
-const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
+const InvoiceCreator: React.FC<Props> = ({ updateInvoice, currency }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
@@ -101,6 +103,7 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice }) => {
             append={append}
             getValues={getValues}
             setValue={setValue}
+            currency={currency}
           />
           <CommentBox register={register} />
           <div className="text-center mb-5">
