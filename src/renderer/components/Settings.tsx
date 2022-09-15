@@ -1,5 +1,6 @@
 import React, { SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
+import currencies from '../i18n/currencies/currencies';
 
 type Props = {
   currency: string;
@@ -13,6 +14,17 @@ const Settings: React.FC<Props> = ({ currency, setCurrency }) => {
     i18n.changeLanguage(e.currentTarget.value);
     localStorage.setItem('language', e.currentTarget.value);
   };
+
+  const renderCurrencyOptions = () => {
+    const currenciesArray = Object.entries(currencies);
+    return currenciesArray.map((element) => (
+      <option value={element[0]} key={element[1].id}>
+        {element[1].name}
+      </option>
+    ));
+  };
+
+  renderCurrencyOptions();
   return (
     <div className="container" style={{ maxWidth: '800px', minHeight: '100%' }}>
       <h1 className="text-center my-3">{t('settings')}</h1>
@@ -45,9 +57,7 @@ const Settings: React.FC<Props> = ({ currency, setCurrency }) => {
             localStorage.setItem('currency', e.currentTarget.value);
           }}
         >
-          <option value="$">$</option>
-          <option value="€">€</option>
-          <option value="£">£</option>
+          {renderCurrencyOptions()}
         </select>
       </div>
     </div>
