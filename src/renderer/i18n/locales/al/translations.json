@@ -17,7 +17,7 @@
   "logo": "Logo",
   "update-logo": "Azhurno Logon",
   "buyer": "Bleresi",
-  "invoice": "Fature",
+  "invoice": "Fatura",
   "invoice-date": "Data e fatures",
   "invoice-no": "Nr. Fatures",
   "delivery-date": "Data e Dergeses",
@@ -45,5 +45,7 @@
   "save-as-pdf": "Ruaj si PDF",
   "language": "Gjuha",
   "currency": "Valuta",
-  "add-item": "Shto Artikull"
+  "add-item": "Shto Artikull",
+  "date-format": "Formati i dates",
+  "cancel": "Anulo"
 }

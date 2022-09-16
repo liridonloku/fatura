@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
+import { BsFillTrashFill } from 'react-icons/bs';
 import { CompanyInfoType } from './companyInfo.types';
 
 //  Use generateInvoiceNo to generate unique file names
@@ -218,7 +219,7 @@ const CompanyInfo: React.FC<Props> = ({
                 className="btn btn-danger"
                 onClick={() => remove(i)}
               >
-                {t('remove')}
+                <BsFillTrashFill size={20} />
               </button>
             </div>
           ))}

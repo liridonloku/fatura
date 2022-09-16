@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useForm, SubmitHandler, useFieldArray } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import convertInvoiceData from 'renderer/utils/convertInvoceData';
+import { BsFillPrinterFill, BsBoxArrowRight } from 'react-icons/bs';
 import { CurrencyTypes } from 'renderer/i18n/currencies/currencies';
 import { InvoiceType, BuyerInfoType } from './invoice.types';
 import BuyerInfo from './BuyerInfo';
@@ -108,7 +109,12 @@ const InvoiceCreator: React.FC<Props> = ({ updateInvoice, currency }) => {
           <CommentBox register={register} />
           <div className="text-center mb-5">
             <button type="submit" className="btn btn-success mt-3">
-              {`${t('print')}/${t('export')}`}
+              <span className="d-flex gap-2 align-items-center">
+                <BsFillPrinterFill size={20} />
+                {t('print')} /
+                <BsBoxArrowRight size={20} />
+                {t('export')}
+              </span>
             </button>
           </div>
         </form>

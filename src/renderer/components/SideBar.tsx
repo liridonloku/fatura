@@ -1,6 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  BsFillHouseDoorFill,
+  BsFillBriefcaseFill,
+  BsFillGearFill,
+} from 'react-icons/bs';
 import { CompanyInfoType } from './companyInfo/companyInfo.types';
 
 type Props = {
@@ -22,7 +27,7 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
         <div>
           <button
             type="button"
-            className={`btn ${
+            className={`btn text-start d-flex align-items-center ${
               location.pathname === '/' ? 'btn-secondary' : 'btn-dark'
             } rounded-0 w-100 border-0 py-2`}
             onClick={(e) => {
@@ -30,11 +35,14 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
               navigate('/');
             }}
           >
+            <span className="ms-2 me-3">
+              <BsFillHouseDoorFill size={24} />
+            </span>
             {t('home')}
           </button>
           <button
             type="button"
-            className={`btn ${
+            className={`btn text-start ${
               location.pathname === '/company-info'
                 ? 'btn-secondary'
                 : 'btn-dark'
@@ -44,11 +52,14 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
               navigate('/company-info', { replace: false });
             }}
           >
+            <span className="ms-2 me-3">
+              <BsFillBriefcaseFill size={24} />
+            </span>
             {t('company')}
           </button>
           <button
             type="button"
-            className={`btn ${
+            className={`btn text-start ${
               location.pathname === '/settings' ? 'btn-secondary' : 'btn-dark'
             } rounded-0 w-100 py-2`}
             onClick={(e) => {
@@ -56,6 +67,9 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
               navigate('/settings', { replace: false });
             }}
           >
+            <span className="ms-2 me-3">
+              <BsFillGearFill size={24} />
+            </span>
             {t('settings')}
           </button>
         </div>

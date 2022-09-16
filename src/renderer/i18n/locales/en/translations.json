@@ -45,5 +45,7 @@
   "save-as-pdf": "Save as PDF",
   "language": "Language",
   "currency": "Currency",
-  "add-item": "Add Item"
+  "add-item": "Add Item",
+  "date-format": "Date format",
+  "cancel": "Cancel"
 }

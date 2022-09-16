@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import {
+  BsXCircle,
+  BsFillPrinterFill,
+  BsFillFilePdfFill,
+} from 'react-icons/bs';
 import { DateFormatType } from 'renderer/i18n/dateFormats/dateFormats';
 import { CompanyInfoType } from '../companyInfo/companyInfo.types';
 import { InvoiceType } from '../invoiceCreator/invoice.types';
@@ -211,14 +216,17 @@ const InvoiceViewer: React.FC<Props> = ({
           </p>
         ))}
       </div>
-      <div className="container text-center fixed-bottom print-none mb-3 d-print-none">
+      <div className="container text-center position-sticky bottom-0 pb-4 d-print-none">
         <button
           type="button"
           className="btn btn-primary me-2"
           onClick={() => saveToPDF()}
           disabled={loading}
         >
-          {t('save-as-pdf')}
+          <span className="d-flex gap-2 align-items-center">
+            <BsFillFilePdfFill size={20} />
+            {t('save-as-pdf')}
+          </span>
         </button>
         <button
           type="button"
@@ -226,15 +234,21 @@ const InvoiceViewer: React.FC<Props> = ({
           onClick={() => printInvoice()}
           disabled={loading}
         >
-          {t('print')}
+          <span className="d-flex gap-2 align-items-center">
+            <BsFillPrinterFill size={20} />
+            {t('print')}
+          </span>
         </button>
         <button
-          className="btn btn-secondary"
+          className="btn btn-danger"
           type="button"
           onClick={() => navigate('/')}
           disabled={loading}
         >
-          {t('home')}
+          <span className="d-flex gap-2 align-items-center">
+            <BsXCircle size={20} />
+            {t('cancel')}
+          </span>
         </button>
       </div>
     </StyledInvoiceViewer>

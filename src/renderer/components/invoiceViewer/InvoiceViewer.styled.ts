@@ -7,11 +7,12 @@ const StyledInvoiceViewer = styled.div`
   --space-between-sections: 60px;
 
   padding: 16px;
-  min-height: 150vw;
-  max-width: 1200px;
+  max-width: 960px;
+  aspect-ratio: 2/3;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+  padding-bottom: 0;
 
   .logo-container {
     display: flex;
@@ -181,8 +182,11 @@ const StyledInvoiceViewer = styled.div`
   }
 
   @media print {
+    max-width: 1100px;
     width: 1100px;
     min-height: 1540px;
+    aspect-ratio: auto;
+    padding-bottom: 16px;
   }
 `;
 

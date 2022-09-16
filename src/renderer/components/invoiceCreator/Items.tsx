@@ -11,6 +11,7 @@ import {
   UseFormSetValue,
 } from 'react-hook-form/dist/types/form';
 import { useTranslation } from 'react-i18next';
+import { BsFillTrashFill } from 'react-icons/bs';
 import currencies, { CurrencyTypes } from 'renderer/i18n/currencies/currencies';
 import { InvoiceType, ItemType } from './invoice.types';
 
@@ -217,9 +218,9 @@ const Items: React.FC<Props> = ({
             <button
               type="button"
               onClick={() => remove(i)}
-              className="btn btn-outline-danger"
+              className="btn btn-outline-danger px-2"
             >
-              {t('del')}
+              <BsFillTrashFill size={16} />
             </button>
           </div>
         </div>
@@ -259,7 +260,7 @@ const Items: React.FC<Props> = ({
           />
           <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">
-              {t('del')}
+              <BsFillTrashFill size={20} />
             </button>
           </div>
         </div>
@@ -278,7 +279,7 @@ const Items: React.FC<Props> = ({
           />
           <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">
-              {t('del')}
+              <BsFillTrashFill size={20} />
             </button>
           </div>
         </div>
@@ -297,7 +298,7 @@ const Items: React.FC<Props> = ({
           />
           <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">
-              {t('del')}
+              <BsFillTrashFill size={20} />
             </button>
           </div>
         </div>
@@ -316,7 +317,7 @@ const Items: React.FC<Props> = ({
           />
           <div className="text-center d-flex align-items-center">
             <button type="button" className="btn btn-outline-danger invisible">
-              {t('del')}
+              <BsFillTrashFill size={20} />
             </button>
           </div>
         </div>
