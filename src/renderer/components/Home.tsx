@@ -1,27 +1,38 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BsFileEarmarkPlus } from 'react-icons/bs';
 
-type Props = Record<string, unknown>;
+type Props = {
+  /**
+   * Source for the logo
+   */
+  logo: string;
+};
 
-const Home: React.FC<Props> = () => {
+/**
+ * The home screen component
+ */
+const Home: React.FC<Props> = ({ logo }) => {
   const navigate = useNavigate();
   return (
     <div className="container text-center">
       <h1>Home</h1>
       <button
-        className="btn btn-primary me-2"
-        type="button"
-        onClick={() => navigate('/company-info')}
-      >
-        Company Info
-      </button>
-      <button
-        className="btn btn-secondary"
+        className="btn btn-outline-success shadow"
         type="button"
         onClick={() => navigate('/new-invoice')}
       >
-        New Invoice
+        <span className="d-flex align-items-center gap-2 fw-bold">
+          <BsFileEarmarkPlus size={24} />
+          New Invoice
+        </span>
       </button>
+      <div
+        className="image-container mt-5 mx-auto"
+        style={{ maxWidth: '600px', maxHeight: '600px' }}
+      >
+        <img src={logo} alt="Logo" className="img-fluid" />
+      </div>
     </div>
   );
 };

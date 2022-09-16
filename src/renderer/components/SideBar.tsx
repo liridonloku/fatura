@@ -21,7 +21,7 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
     <div className="bg-dark text-light h-100">
       <div className="container-fluid p-0 sticky-top vh-100 overflow-auto">
         <div className="mb-5">
-          <img src={logo} alt="" className="img-fluid" />
+          {logo && <img src={logo} alt="" className="img-fluid" />}
           <h1 className="fs-4 text-center">{company.name}</h1>
         </div>
         <div>

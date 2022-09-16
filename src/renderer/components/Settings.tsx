@@ -45,7 +45,7 @@ const Settings: React.FC<Props> = ({
 
   return (
     <div className="container" style={{ maxWidth: '800px', minHeight: '100%' }}>
-      <h1 className="text-center my-3">{t('settings')}</h1>
+      <h1 className="text-center py-3">{t('settings')}</h1>
       <div className="d-flex align-items-center mb-3">
         <label htmlFor="language" className="col-6 text-center">
           {t('language')}

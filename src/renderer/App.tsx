@@ -79,7 +79,7 @@ export default function App() {
         </div>
         <div className="container-fluid col-sm-9 col-lg-10 p-0 m-0">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home logo={logo} />} />
             <Route
               path="/company-info"
               element={
