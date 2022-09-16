@@ -153,15 +153,20 @@ const StyledInvoiceViewer = styled.div`
       margin-right: 100px;
     }
 
-    .labels {
-      p {
-        text-align: right;
-      }
-    }
+    .totals {
+      display: grid;
+      grid-template-columns: auto auto;
+      align-items: center;
+      height: fit-content;
 
-    .calculations {
-      width: 15%;
-      text-align: center;
+      @media print {
+        padding-right: 30px;
+      }
+
+      p {
+        padding: 5px 15px;
+        margin: 0;
+      }
     }
   }
 

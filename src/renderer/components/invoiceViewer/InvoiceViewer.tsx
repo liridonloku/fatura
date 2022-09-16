@@ -179,23 +179,27 @@ const InvoiceViewer: React.FC<Props> = ({
               {invoice.additionalInfo}
             </p>
           </div>
-          <div className="labels">
+          <div
+            className="totals"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'auto auto',
+            }}
+          >
             <p>{t('total')}: </p>
-            <p>{t('total-without-tax')}: </p>
-            <p>{t('tax')}: </p>
-            <p className="amount-due">
-              <b>{t('ammount-due')}: </b>
-            </p>
-          </div>
-          <div className="calculations">
             <p>{calculateTotal(invoice.items)}€</p>
+            <p>{t('total-without-tax')}: </p>
             <p>{calculateTotalWithoutTax(invoice.items)}€</p>
+            <p>{t('tax')}: </p>
             <p>
               {(
                 parseFloat(calculateTotal(invoice.items)) -
                 parseFloat(calculateTotalWithoutTax(invoice.items))
               ).toFixed(2)}
               €
+            </p>
+            <p className="amount-due">
+              <b>{t('ammount-due')}: </b>
             </p>
             <p className="amount-due">
               <b>{calculateTotal(invoice.items)}€</b>
