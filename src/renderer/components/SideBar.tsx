@@ -42,7 +42,7 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
           </button>
           <button
             type="button"
-            className={`btn text-start ${
+            className={`btn text-start d-flex align-items-center ${
               location.pathname === '/company-info'
                 ? 'btn-secondary'
                 : 'btn-dark'
@@ -59,7 +59,7 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
           </button>
           <button
             type="button"
-            className={`btn text-start ${
+            className={`btn text-start d-flex align-items-center ${
               location.pathname === '/settings' ? 'btn-secondary' : 'btn-dark'
             } rounded-0 w-100 py-2`}
             onClick={(e) => {
