@@ -1,13 +1,23 @@
 import React, { SetStateAction } from 'react';
 import { useTranslation } from 'react-i18next';
+import dateFormats, {
+  DateFormatType,
+} from 'renderer/i18n/dateFormats/dateFormats';
 import currencies, { CurrencyTypes } from '../i18n/currencies/currencies';
 
 type Props = {
-  currency: string;
+  currency: CurrencyTypes;
   setCurrency: (value: SetStateAction<CurrencyTypes>) => void;
+  dateFormat: DateFormatType;
+  setDateFormat: (value: SetStateAction<DateFormatType>) => void;
 };
 
-const Settings: React.FC<Props> = ({ currency, setCurrency }) => {
+const Settings: React.FC<Props> = ({
+  currency,
+  setCurrency,
+  dateFormat,
+  setDateFormat,
+}) => {
   const { t, i18n } = useTranslation();
 
   const changeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -24,7 +34,15 @@ const Settings: React.FC<Props> = ({ currency, setCurrency }) => {
     ));
   };
 
-  renderCurrencyOptions();
+  const renderDateFormatOptions = () => {
+    const dateFormatsArray = Object.entries(dateFormats);
+    return dateFormatsArray.map((element) => (
+      <option value={element[0]} key={element[1].id}>
+        {element[1].format}
+      </option>
+    ));
+  };
+
   return (
     <div className="container" style={{ maxWidth: '800px', minHeight: '100%' }}>
       <h1 className="text-center my-3">{t('settings')}</h1>
@@ -58,6 +76,23 @@ const Settings: React.FC<Props> = ({ currency, setCurrency }) => {
           }}
         >
           {renderCurrencyOptions()}
+        </select>
+      </div>
+      <div className="d-flex align-items-center mb-3">
+        <label htmlFor="dateFormat" className="col-6 text-center">
+          {t('date-format')}
+        </label>
+        <select
+          name="dateFormat"
+          id="dateFormat"
+          className="form-select"
+          defaultValue={dateFormat}
+          onChange={(e) => {
+            setDateFormat(e.currentTarget.value as DateFormatType);
+            localStorage.setItem('dateFormat', e.currentTarget.value);
+          }}
+        >
+          {renderDateFormatOptions()}
         </select>
       </div>
     </div>

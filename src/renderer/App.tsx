@@ -11,6 +11,7 @@ import { InvoiceType } from './components/invoiceCreator/invoice.types';
 import SideBar from './components/SideBar';
 import Settings from './components/Settings';
 import { CurrencyTypes } from './i18n/currencies/currencies';
+import { DateFormatType } from './i18n/dateFormats/dateFormats';
 
 export default function App() {
   const [companyInfo, setcompanyInfo] = useState<CompanyInfoType>({
@@ -20,6 +21,7 @@ export default function App() {
   const [logo, setlogo] = useState('');
   const [invoice, setinvoice] = useState<InvoiceType | null>(null);
   const [currency, setCurrency] = useState<CurrencyTypes>('EUR');
+  const [dateFormat, setDateFormat] = useState<DateFormatType>('fr-CH');
 
   const { i18n } = useTranslation();
 
@@ -50,13 +52,22 @@ export default function App() {
       setlogo(parsed);
     }
 
+    //  Load language setting
     const language = localStorage.getItem('language');
     if (language) i18n.changeLanguage(language);
 
+    // Load currency setting
     const curr = localStorage.getItem('currency');
     if (curr) {
       setCurrency(curr as CurrencyTypes);
     }
+
+    // Load dateFormat setting
+    const dateF = localStorage.getItem('dateFormat');
+    if (dateF) {
+      setDateFormat(dateF as DateFormatType);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -96,13 +107,19 @@ export default function App() {
                   company={companyInfo}
                   invoice={invoice}
                   logo={logo}
+                  dateFormat={dateFormat}
                 />
               }
             />
             <Route
               path="/settings"
               element={
-                <Settings currency={currency} setCurrency={setCurrency} />
+                <Settings
+                  currency={currency}
+                  setCurrency={setCurrency}
+                  dateFormat={dateFormat}
+                  setDateFormat={setDateFormat}
+                />
               }
             />
           </Routes>

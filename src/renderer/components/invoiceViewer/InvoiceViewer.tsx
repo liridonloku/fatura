@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
+import { DateFormatType } from 'renderer/i18n/dateFormats/dateFormats';
 import { CompanyInfoType } from '../companyInfo/companyInfo.types';
 import { InvoiceType } from '../invoiceCreator/invoice.types';
 import StyledInvoiceViewer from './InvoiceViewer.styled';
@@ -18,6 +19,10 @@ type Props = {
    * Path to the logo
    */
   logo: string;
+  /**
+   * Date Format
+   */
+  dateFormat: DateFormatType;
 };
 
 /**
@@ -27,6 +32,7 @@ const InvoiceViewer: React.FC<Props> = ({
   company = { name: 'Company', id: 'id' },
   invoice,
   logo,
+  dateFormat,
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -112,7 +118,7 @@ const InvoiceViewer: React.FC<Props> = ({
           </h2>
           <h3>
             <span>{t('date')}: </span>
-            {invoice?.invoiceDate.toLocaleDateString('tr')}
+            {invoice?.invoiceDate.toLocaleDateString(dateFormat)}
           </h3>
         </div>
       </div>
@@ -129,8 +135,8 @@ const InvoiceViewer: React.FC<Props> = ({
           <div>
             <p className="mb-0 fw-bold">{t('delivery')}</p>
             <p className="mb-0">
-              {t('date')}:
-              {invoice.delivery.deliveryDate.toLocaleDateString('tr')}
+              {t('date')}:{' '}
+              {invoice.delivery.deliveryDate.toLocaleDateString(dateFormat)}
             </p>
             <p className="mb-0">
               {t('address')}: {invoice.delivery.deliveryAddress}
