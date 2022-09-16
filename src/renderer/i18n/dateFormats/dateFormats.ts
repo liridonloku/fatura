@@ -1,3 +1,6 @@
+/**
+ * Available date formats
+ */
 const dateFormats = {
   'de-De': { format: 'd.m.yyyy', id: 1 },
   'en-GB': { format: 'dd/mm/yyyy', id: 2 },

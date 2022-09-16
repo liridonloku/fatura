@@ -1,3 +1,6 @@
+/**
+ * Available currencies
+ */
 const currencies = {
   AFA: { name: 'Afghan Afghani', symbol: '؋', id: 1 },
   ALL: { name: 'Albanian Lek', symbol: 'Lek', id: 2 },

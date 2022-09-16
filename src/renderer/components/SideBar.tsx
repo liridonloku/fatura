@@ -17,6 +17,7 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useTranslation();
+
   return (
     <div className="bg-dark text-light h-100">
       <div className="container-fluid p-0 sticky-top vh-100 overflow-auto">

@@ -20,6 +20,11 @@ const Settings: React.FC<Props> = ({
 }) => {
   const { t, i18n } = useTranslation();
 
+  /**
+   * Changes the UI and Invoice language
+   * @param e Event from HTMLSelectElement
+   * @returns void
+   */
   const changeLanguage = (e: React.ChangeEvent<HTMLSelectElement>) => {
     i18n.changeLanguage(e.currentTarget.value);
     localStorage.setItem('language', e.currentTarget.value);
