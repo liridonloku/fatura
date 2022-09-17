@@ -108,6 +108,7 @@ export default function App() {
                   invoice={invoice}
                   logo={logo}
                   dateFormat={dateFormat}
+                  currency={currency}
                 />
               }
             />

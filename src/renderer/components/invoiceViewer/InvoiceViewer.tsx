@@ -6,6 +6,7 @@ import {
   BsFillPrinterFill,
   BsFillFilePdfFill,
 } from 'react-icons/bs';
+import currencies, { CurrencyTypes } from 'renderer/i18n/currencies/currencies';
 import { DateFormatType } from 'renderer/i18n/dateFormats/dateFormats';
 import { CompanyInfoType } from '../companyInfo/companyInfo.types';
 import { InvoiceType } from '../invoiceCreator/invoice.types';
@@ -24,10 +25,8 @@ type Props = {
    * Path to the logo
    */
   logo: string;
-  /**
-   * Date Format
-   */
   dateFormat: DateFormatType;
+  currency: CurrencyTypes;
 };
 
 /**
@@ -38,6 +37,7 @@ const InvoiceViewer: React.FC<Props> = ({
   invoice,
   logo,
   dateFormat,
+  currency,
 }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -57,10 +57,10 @@ const InvoiceViewer: React.FC<Props> = ({
         <div className="description">{item.description}</div>
         <div className="units">{item.units}</div>
         <div className="qty">{item.quantity}</div>
-        <div className="price">{item.price.toFixed(2)}€</div>
+        <div className="price">{item.price.toFixed(2)}</div>
         <div className="tax">{item.tax}%</div>
-        <div className="price-w-tax">{item.priceWTax}€</div>
-        <div className="total">{item.total}€</div>
+        <div className="price-w-tax">{item.priceWTax}</div>
+        <div className="total">{`${item.total} ${currencies[currency].symbol}`}</div>
       </div>
     ));
   };
@@ -179,30 +179,31 @@ const InvoiceViewer: React.FC<Props> = ({
               {invoice.additionalInfo}
             </p>
           </div>
-          <div
-            className="totals"
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'auto auto',
-            }}
-          >
+          <div className="totals">
             <p>{t('total')}: </p>
-            <p>{calculateTotal(invoice.items)}€</p>
+            <p className="value">
+              {calculateTotal(invoice.items)} {currencies[currency].symbol}
+            </p>
             <p>{t('total-without-tax')}: </p>
-            <p>{calculateTotalWithoutTax(invoice.items)}€</p>
+            <p className="value">
+              {calculateTotalWithoutTax(invoice.items)}{' '}
+              {currencies[currency].symbol}
+            </p>
             <p>{t('tax')}: </p>
-            <p>
+            <p className="value">
               {(
                 parseFloat(calculateTotal(invoice.items)) -
                 parseFloat(calculateTotalWithoutTax(invoice.items))
-              ).toFixed(2)}
-              €
+              ).toFixed(2)}{' '}
+              {currencies[currency].symbol}
             </p>
             <p className="amount-due">
               <b>{t('ammount-due')}: </b>
             </p>
-            <p className="amount-due">
-              <b>{calculateTotal(invoice.items)}€</b>
+            <p className="amount-due value">
+              <b>
+                {calculateTotal(invoice.items)} {currencies[currency].symbol}
+              </b>
             </p>
           </div>
         </div>
