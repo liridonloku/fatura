@@ -16,7 +16,7 @@ const Home: React.FC<Props> = ({ logo }) => {
   const navigate = useNavigate();
   return (
     <div className="container text-center">
-      <h1>Home</h1>
+      <h1 className="my-3">Home</h1>
       <button
         className="btn btn-outline-success shadow"
         type="button"
@@ -27,12 +27,14 @@ const Home: React.FC<Props> = ({ logo }) => {
           New Invoice
         </span>
       </button>
-      <div
-        className="image-container mt-5 mx-auto"
-        style={{ maxWidth: '600px', maxHeight: '600px' }}
-      >
-        <img src={logo} alt="Logo" className="img-fluid" />
-      </div>
+      {logo && (
+        <div
+          className="image-container mt-5 mx-auto"
+          style={{ maxWidth: '600px', maxHeight: '600px' }}
+        >
+          <img src={logo} alt="Logo" className="img-fluid" />
+        </div>
+      )}
     </div>
   );
 };

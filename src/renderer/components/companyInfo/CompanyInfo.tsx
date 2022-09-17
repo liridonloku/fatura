@@ -132,7 +132,7 @@ const CompanyInfo: React.FC<Props> = ({
   return (
     <>
       <div className="container text-center">
-        <h1>{t('company-info')}</h1>
+        <h1 className="my-3">{t('company-info')}</h1>
         <button
           className="btn btn-primary mb-3"
           type="button"

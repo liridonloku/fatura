@@ -212,15 +212,17 @@ const InvoiceViewer: React.FC<Props> = ({
         <p>{t('seller')}</p>
         <p>{t('buyer')}</p>
       </div>
-      <div className="footer">
-        <p className="fw-bold">{t('bank-accounts')}:</p>
-        {company.bankAccounts?.map((account, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <p className="mb-0" key={index}>
-            {account.bank}: {account.accountNumber}
-          </p>
-        ))}
-      </div>
+      {company.bankAccounts && company.bankAccounts?.length > 0 && (
+        <div className="footer">
+          <p className="fw-bold">{t('bank-accounts')}:</p>
+          {company.bankAccounts?.map((account, index) => (
+            // eslint-disable-next-line react/no-array-index-key
+            <p className="mb-0" key={index}>
+              {account.bank}: {account.accountNumber}
+            </p>
+          ))}
+        </div>
+      )}
       <div className="container text-center position-sticky bottom-0 pb-4 d-print-none">
         <button
           type="button"
