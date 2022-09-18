@@ -228,7 +228,14 @@
     "win": {
       "target": [
         "nsis"
-      ]
+      ],
+      "icon": "./assets/icons/512x512.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true
     },
     "linux": {
       "target": [
