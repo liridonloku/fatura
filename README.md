@@ -107,7 +107,7 @@ This app is simple to use:
 
 ## Known issues
 
-- Due to security certificate requirements, a yearly payment (that I can't afford is necessary). Therefore the app can't be installed on MacOS, and it displays a security risk message when installing on Windows.
+- Due to security certificate requirements, a yearly payment (that I can't afford) is necessary. Therefore the app can't be installed on MacOS, and it displays a security risk message when installing on Windows.
 
 <br>
 
