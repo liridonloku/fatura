@@ -12,11 +12,23 @@ i18n.use(initReactI18next).init({
     al: {
       translations: require('./locales/al/translations.json'),
     },
+    de: {
+      translations: require('./locales/de/translations.json'),
+    },
+    es: {
+      translations: require('./locales/es/translations.json'),
+    },
+    fr: {
+      translations: require('./locales/fr/translations.json'),
+    },
+    tr: {
+      translations: require('./locales/tr/translations.json'),
+    },
   },
   ns: ['translations'],
   defaultNS: 'translations',
 });
 
-i18n.languages = ['en', 'al'];
+i18n.languages = ['en', 'al', 'de', 'es', 'fr', 'tr'];
 
 export default i18n;

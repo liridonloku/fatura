@@ -19,7 +19,7 @@ const SideBar: React.FC<Props> = ({ company, logo }) => {
   const { t } = useTranslation();
 
   return (
-    <div className="bg-dark text-light h-100 shadow">
+    <div className="bg-dark text-light w-auto h-100 w-1 shadow">
       <div className="container-fluid p-0 sticky-top vh-100 overflow-auto">
         <div className="mb-5">
           {logo && <img src={logo} alt="" className="img-fluid mb-3" />}
