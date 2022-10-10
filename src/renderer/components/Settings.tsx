@@ -67,7 +67,7 @@ const Settings: React.FC<Props> = ({
           <option value="de">German</option>
           <option value="es">Spanish</option>
           <option value="fr">French</option>
-          <option value="tr">turkish</option>
+          <option value="tr">Turkish</option>
         </select>
       </div>
       <div className="d-flex align-items-center mb-3">
