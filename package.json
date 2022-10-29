@@ -1,11 +1,10 @@
 {
   "description": "A cross platform invoicing app",
   "keywords": [
-    "electron",
+    "offline",
     "fatura",
-    "react",
-    "typescript",
-    "ts"
+    "invoicing",
+    "invoice"
   ],
   "homepage": "https://github.com/liridonloku/fatura#readme",
   "bugs": {
@@ -239,9 +238,10 @@
     },
     "linux": {
       "target": [
-        "AppImage"
+        "snap"
       ],
-      "category": "Productivity"
+      "category": "Office",
+      "icon": "./assets/icons/512x512.png"
     },
     "directories": {
       "app": "release/app",
