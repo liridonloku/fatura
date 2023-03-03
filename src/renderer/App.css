@@ -1,4 +1,8 @@
 @import 'bootstrap';
+@import '@fontsource/roboto/300.css';
+@import '@fontsource/roboto/400.css';
+@import '@fontsource/roboto/500.css';
+@import '@fontsource/roboto/700.css';
 
 * {
   margin: 0;
@@ -14,6 +18,10 @@
 
 .cSpan {
   min-width: 120px;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Remove arrows on input[number] */
